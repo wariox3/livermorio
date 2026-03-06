@@ -47,7 +47,7 @@ export class LoginComponent {
 
     const { email, password } = this.form.getRawValue();
 
-    this.authService.login({ email: email!, password: password! }).subscribe({
+    this.authService.login({ email: email!, password: password!, client_type: 'web' }).subscribe({
       next: () => {
         const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/dashboard';
         this.router.navigateByUrl(returnUrl);

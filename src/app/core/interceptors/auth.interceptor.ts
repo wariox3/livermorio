@@ -1,13 +1,12 @@
-import { inject } from '@angular/core';
 import { HttpInterceptorFn } from '@angular/common/http';
-import { AuthService } from '../services/auth.service';
+import { environment } from '../../../environments/environment';
 
+/**
+ * Añade `withCredentials: true` a todas las peticiones dirigidas al API
+ * para que el navegador envíe las cookies HTTP-only automáticamente.
+ */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = inject(AuthService).getToken();
+  if (!req.url.startsWith(environment.apiUrl)) return next(req);
 
-  if (!token) return next(req);
-
-  return next(
-    req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
-  );
+  return next(req.clone({ withCredentials: true }));
 };

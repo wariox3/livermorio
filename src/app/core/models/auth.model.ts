@@ -1,15 +1,15 @@
 export interface LoginRequest {
   email: string;
   password: string;
+  client_type: 'api' | 'web';
 }
 
-export interface LoginResponse {
-  accessToken: string;
-  user: User;
+/** Respuesta del backend; las cookies HTTP-only se setean automáticamente */
+export interface AuthResponse {
+  user: Usuario;
 }
 
-export interface User {
-  id: string;
-  name: string;
+export interface Usuario {
+  id: number;
   email: string;
 }

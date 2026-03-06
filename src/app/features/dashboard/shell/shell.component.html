@@ -16,12 +16,12 @@
     <div class="navbar-end">
       @if (currentUser()) {
         <p-avatar
-          [label]="currentUser()!.name.charAt(0).toUpperCase()"
+          [label]="currentUser()!.email.charAt(0).toUpperCase()"
           shape="circle"
           size="normal"
           class="user-avatar"
         />
-        <span class="user-name">{{ currentUser()!.name }}</span>
+        <span class="user-name">{{ currentUser()!.email }}</span>
       }
       <p-button
         label="Cerrar sesión"
