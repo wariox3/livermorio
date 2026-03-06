@@ -1,0 +1,58 @@
+<div class="shell-layout">
+  <!-- Navbar -->
+  <header class="shell-navbar">
+    <div class="navbar-start">
+      <p-button
+        icon="pi pi-bars"
+        [text]="true"
+        severity="secondary"
+        class="hamburger-btn"
+        (onClick)="toggleDrawer()"
+        aria-label="Abrir menú"
+      />
+      <span class="navbar-logo">Semantica</span>
+    </div>
+
+    <div class="navbar-end">
+      @if (currentUser()) {
+        <p-avatar
+          [label]="currentUser()!.name.charAt(0).toUpperCase()"
+          shape="circle"
+          size="normal"
+          class="user-avatar"
+        />
+        <span class="user-name">{{ currentUser()!.name }}</span>
+      }
+      <p-button
+        label="Cerrar sesión"
+        icon="pi pi-sign-out"
+        [text]="true"
+        severity="secondary"
+        (onClick)="logout()"
+      />
+    </div>
+  </header>
+
+  <div class="shell-body">
+    <!-- Sidebar desktop -->
+    <aside class="shell-sidebar">
+      <p-panelMenu [model]="menuItems" styleClass="sidebar-menu" />
+    </aside>
+
+    <!-- Main content -->
+    <main class="shell-content">
+      <router-outlet />
+    </main>
+  </div>
+</div>
+
+<!-- Drawer móvil -->
+<p-drawer
+  [visible]="drawerVisible()"
+  (visibleChange)="drawerVisible.set($event)"
+  position="left"
+  header="Menú"
+  styleClass="mobile-drawer"
+>
+  <p-panelMenu [model]="menuItems" styleClass="sidebar-menu" (click)="drawerVisible.set(false)" />
+</p-drawer>
