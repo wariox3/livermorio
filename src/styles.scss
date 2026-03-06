@@ -1,5 +1,25 @@
 @import 'primeicons/primeicons.css';
 
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist/Geist-Italic[wght].woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --p-font-family: 'Geist', system-ui, sans-serif;
+}
+
 *,
 *::before,
 *::after {
@@ -8,7 +28,7 @@
 
 body {
   margin: 0;
-  font-family: var(--p-font-family, system-ui, sans-serif);
+  font-family: 'Geist', system-ui, sans-serif;
   background: var(--p-surface-ground);
   color: var(--p-text-color);
 }
