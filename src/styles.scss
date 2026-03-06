@@ -1,0 +1,26 @@
+@import 'primeicons/primeicons.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--p-font-family, system-ui, sans-serif);
+  background: var(--p-surface-ground);
+  color: var(--p-text-color);
+}
+
+.w-full {
+  width: 100%;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
