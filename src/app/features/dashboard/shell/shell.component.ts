@@ -34,6 +34,51 @@ export class ShellComponent {
       icon: 'pi pi-home',
       routerLink: '/dashboard/inicio',
     },
+    {
+      label: 'Pagos',
+      icon: 'pi pi-credit-card',
+      routerLink: '/dashboard/pagos',
+    },
+    {
+      label: 'Reclamos',
+      icon: 'pi pi-exclamation-triangle',
+      routerLink: '/dashboard/reclamos',
+    },
+    {
+      label: 'Solicitudes',
+      icon: 'pi pi-file',
+      routerLink: '/dashboard/solicitudes',
+    },
+    {
+      label: 'Capacitaciones',
+      icon: 'pi pi-book',
+      routerLink: '/dashboard/capacitaciones',
+    },
+    {
+      label: 'Certificado Laboral',
+      icon: 'pi pi-id-card',
+      routerLink: '/dashboard/certificado-laboral',
+    },
+    {
+      label: 'Cert. Laboral Histórico',
+      icon: 'pi pi-history',
+      routerLink: '/dashboard/certificado-laboral-historico',
+    },
+    {
+      label: 'Autorización de Arma',
+      icon: 'pi pi-shield',
+      routerLink: '/dashboard/autorizacion-arma',
+    },
+    {
+      label: 'Seguridad Social',
+      icon: 'pi pi-heart',
+      routerLink: '/dashboard/seguridad-social',
+    },
+    {
+      label: 'Turnos',
+      icon: 'pi pi-calendar',
+      routerLink: '/dashboard/turnos',
+    },
   ];
 
   toggleDrawer(): void {
