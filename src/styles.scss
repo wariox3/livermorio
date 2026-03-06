@@ -33,6 +33,11 @@ body {
   color: var(--p-text-color);
 }
 
+.page-container {
+  padding: 2rem;
+  max-width: 800px;
+}
+
 .w-full {
   width: 100%;
 }
