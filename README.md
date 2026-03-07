@@ -1,59 +1,90 @@
-# Portal
+# Semantica Portal
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.19.
+Portal de autogestión para empleados. Permite consultar y gestionar información laboral: comprobantes de pago, certificaciones, turnos, seguridad social, reclamos y más, desde un único lugar.
 
-## Development server
+## Stack
 
-To start a local development server, run:
+| Tecnología | Versión |
+|---|---|
+| Angular | 20 (standalone components, signals) |
+| PrimeNG | 20.4.0 (tema Aura) |
+| Fuente | Geist |
 
-```bash
-ng serve
-```
+## Requisitos
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Node.js 20+
+- Angular CLI 20
+- Backend corriendo en `http://localhost:3000/api`
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Comandos
 
 ```bash
-ng generate --help
+ng serve                                   # Dev server → http://localhost:4200
+ng build                                   # Build de producción → dist/
+ng test                                    # Tests unitarios (Karma + Jasmine)
+ng test --include="**/foo.spec.ts"         # Ejecutar un test específico
 ```
 
-## Building
+## Estructura del proyecto
 
-To build the project run:
-
-```bash
-ng build
+```
+src/app/
+├── app.config.ts            # Providers globales (router, HTTP, PrimeNG)
+├── app.routes.ts            # Rutas raíz
+├── core/
+│   ├── guards/
+│   │   ├── auth.guard.ts        # Redirige a /auth/login si no autenticado
+│   │   └── public.guard.ts      # Redirige a /dashboard si ya autenticado
+│   └── interceptors/
+│       └── auth.interceptor.ts  # Agrega withCredentials a todas las peticiones
+└── features/
+    ├── landing/             # Página de inicio pública
+    ├── auth/
+    │   ├── login/           # Formulario de inicio de sesión
+    │   ├── guards/          # Guards de autenticación
+    │   ├── services/        # AuthService (signals, HTTP-only cookies)
+    │   └── models/          # LoginRequest, AuthResponse, Usuario
+    └── dashboard/
+        ├── shell/           # Layout: navbar + sidebar + router-outlet
+        ├── inicio/          # Página de bienvenida
+        ├── pagos/
+        ├── reclamos/
+        ├── solicitudes/
+        ├── capacitaciones/
+        ├── certificado-laboral/
+        ├── certificado-laboral-historico/
+        ├── autorizacion-arma/
+        ├── seguridad-social/
+        └── turnos/
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Rutas
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+```
+/                             → Landing (redirige a /auth/login si no autenticado)
+/auth/login                   → Login
+/dashboard/inicio             → Inicio  (requiere autenticación)
+/dashboard/pagos              → Pagos
+/dashboard/reclamos           → Reclamos
+/dashboard/solicitudes        → Solicitudes
+/dashboard/capacitaciones     → Capacitaciones
+/dashboard/certificado-laboral           → Certificado Laboral
+/dashboard/certificado-laboral-historico → Cert. Laboral Histórico
+/dashboard/autorizacion-arma  → Autorización de Arma
+/dashboard/seguridad-social   → Seguridad Social
+/dashboard/turnos             → Turnos
 ```
 
-## Running end-to-end tests
+Todas las rutas bajo `/dashboard` están protegidas por `authGuard`. Todas las rutas de `/auth` están protegidas por `publicGuard`.
 
-For end-to-end (e2e) testing, run:
+## Autenticación
 
-```bash
-ng e2e
-```
+La autenticación se maneja mediante **HTTP-only cookies** gestionadas por el backend. El `AuthService` mantiene el estado del usuario en un signal (`currentUser`) y expone `isAuthenticated` como computed signal. No se almacena ningún token en `localStorage`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Convenciones
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Todos los componentes son **standalone** — no hay NgModules
+- Estado local con **signals** (`signal`, `computed`) — no usar `BehaviorSubject` para código nuevo
+- Inyección de dependencias con `inject()` en el cuerpo de la clase
+- Nuevas rutas van en un archivo `<feature>.routes.ts` y se cargan lazy desde `app.routes.ts`
+- SCSS usa design tokens de PrimeNG (`var(--p-surface-0)`, `var(--p-primary-color)`, etc.) — evitar colores hardcodeados
