@@ -1,15 +1,15 @@
 // ─── Design Tokens ──────────────────────────────────────────────────────────
 :host {
-  --l-bg:          #060d1a;
-  --l-surface:     #0c1526;
-  --l-surface-2:   #111e35;
-  --l-border:      rgba(255 255 255 / 0.07);
-  --l-accent:      #00e5a0;
-  --l-accent-dim:  rgba(0 229 160 / 0.10);
-  --l-accent-glow: rgba(0 229 160 / 0.25);
-  --l-text:        #e2eaf6;
-  --l-muted:       #5a6e8a;
-  --l-muted-2:     #8ca0ba;
+  --l-bg:          #f8fafc;
+  --l-surface:     #ffffff;
+  --l-surface-2:   #f1f5f9;
+  --l-border:      rgba(0 0 0 / 0.08);
+  --l-accent:      #059669;
+  --l-accent-dim:  rgba(5 150 105 / 0.08);
+  --l-accent-glow: rgba(5 150 105 / 0.20);
+  --l-text:        #0f172a;
+  --l-muted:       #94a3b8;
+  --l-muted-2:     #64748b;
 
   display: block;
   font-family: 'Geist', system-ui, sans-serif;
@@ -53,7 +53,7 @@
 
   &--primary {
     background: var(--l-accent);
-    color: #060d1a;
+    color: #ffffff;
     font-weight: 600;
     box-shadow: 0 0 24px var(--l-accent-glow);
 
@@ -86,7 +86,7 @@
   z-index: 100;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  background: rgba(6 13 26 / 0.85);
+  background: rgba(248 250 252 / 0.90);
   border-bottom: 1px solid var(--l-border);
 
   &__inner {
@@ -117,7 +117,7 @@
     span {
       font-size: 1.1rem;
       font-weight: 800;
-      color: #060d1a;
+      color: #ffffff;
       line-height: 1;
     }
 
@@ -204,8 +204,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255 255 255 / 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255 255 255 / 0.025) 1px, transparent 1px);
+      linear-gradient(rgba(0 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0 0 0 / 0.04) 1px, transparent 1px);
     background-size: 48px 48px;
     mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
   }
@@ -223,7 +223,7 @@
     align-items: center;
     gap: 0.5rem;
     background: var(--l-accent-dim);
-    border: 1px solid rgba(0 229 160 / 0.25);
+    border: 1px solid rgba(5 150 105 / 0.20);
     color: var(--l-accent);
     font-size: 0.8rem;
     font-weight: 600;
@@ -339,12 +339,12 @@
   &--front {
     inset: 0;
     transform: rotate(0deg);
-    background: var(--l-surface-2);
-    border-color: rgba(255 255 255 / 0.1);
+    background: var(--l-surface);
+    border-color: var(--l-border);
     padding: 1.25rem;
     box-shadow:
-      0 24px 64px rgba(0 0 0 / 0.4),
-      0 0 0 1px rgba(255 255 255 / 0.05);
+      0 24px 64px rgba(0 0 0 / 0.10),
+      0 4px 16px rgba(0 0 0 / 0.06);
     animation: cardFloat 6s ease-in-out infinite;
   }
 
@@ -372,20 +372,20 @@
 
   &__line {
     border-radius: 4px;
-    background: rgba(255 255 255 / 0.12);
+    background: rgba(0 0 0 / 0.08);
 
     &--name { height: 10px; width: 120px; }
     &--sub  { height: 8px;  width: 80px; }
   }
 
   &__badge {
-    background: rgba(0 229 160 / 0.15);
+    background: rgba(5 150 105 / 0.10);
     color: var(--l-accent);
     font-size: 0.7rem;
     font-weight: 600;
     padding: 0.25rem 0.6rem;
     border-radius: 100px;
-    border: 1px solid rgba(0 229 160 / 0.25);
+    border: 1px solid rgba(5 150 105 / 0.20);
   }
 
   &__divider {
@@ -502,7 +502,7 @@
 
     .feat-card__icon {
       background: var(--l-accent-dim);
-      border-color: rgba(0 229 160 / 0.3);
+      border-color: rgba(5 150 105 / 0.25);
 
       .pi { color: var(--l-accent); }
     }
