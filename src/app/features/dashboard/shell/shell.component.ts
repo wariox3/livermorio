@@ -1,21 +1,24 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { MenubarModule } from 'primeng/menubar';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelMenuModule } from 'primeng/panelmenu';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
-import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../auth/services/auth.service';
+
+interface NavItem {
+  label: string;
+  icon: string;
+  route: string;
+}
 
 @Component({
   selector: 'app-shell',
   standalone: true,
   imports: [
     RouterOutlet,
-    MenubarModule,
+    RouterLink,
+    RouterLinkActive,
     DrawerModule,
-    PanelMenuModule,
     ButtonModule,
     AvatarModule,
   ],
@@ -28,57 +31,17 @@ export class ShellComponent {
   readonly currentUser = this.authService.currentUser;
   readonly drawerVisible = signal(false);
 
-  readonly menuItems: MenuItem[] = [
-    {
-      label: 'Inicio',
-      icon: 'pi pi-home',
-      routerLink: '/dashboard/inicio',
-    },
-    {
-      label: 'Pagos',
-      icon: 'pi pi-credit-card',
-      routerLink: '/dashboard/pagos',
-    },
-    {
-      label: 'Reclamos',
-      icon: 'pi pi-exclamation-triangle',
-      routerLink: '/dashboard/reclamos',
-    },
-    {
-      label: 'Solicitudes',
-      icon: 'pi pi-file',
-      routerLink: '/dashboard/solicitudes',
-    },
-    {
-      label: 'Capacitaciones',
-      icon: 'pi pi-book',
-      routerLink: '/dashboard/capacitaciones',
-    },
-    {
-      label: 'Certificado Laboral',
-      icon: 'pi pi-id-card',
-      routerLink: '/dashboard/certificado-laboral',
-    },
-    {
-      label: 'Cert. Laboral Histórico',
-      icon: 'pi pi-history',
-      routerLink: '/dashboard/certificado-laboral-historico',
-    },
-    {
-      label: 'Autorización de Arma',
-      icon: 'pi pi-shield',
-      routerLink: '/dashboard/autorizacion-arma',
-    },
-    {
-      label: 'Seguridad Social',
-      icon: 'pi pi-heart',
-      routerLink: '/dashboard/seguridad-social',
-    },
-    {
-      label: 'Turnos',
-      icon: 'pi pi-calendar',
-      routerLink: '/dashboard/turnos',
-    },
+  readonly navItems: NavItem[] = [
+    { label: 'Inicio', icon: 'pi pi-home', route: '/dashboard/inicio' },
+    { label: 'Pagos', icon: 'pi pi-credit-card', route: '/dashboard/pagos' },
+    { label: 'Reclamos', icon: 'pi pi-exclamation-triangle', route: '/dashboard/reclamos' },
+    { label: 'Solicitudes', icon: 'pi pi-file', route: '/dashboard/solicitudes' },
+    { label: 'Capacitaciones', icon: 'pi pi-book', route: '/dashboard/capacitaciones' },
+    { label: 'Certificado Laboral', icon: 'pi pi-id-card', route: '/dashboard/certificado-laboral' },
+    { label: 'Cert. Laboral Histórico', icon: 'pi pi-history', route: '/dashboard/certificado-laboral-historico' },
+    { label: 'Autorización de Arma', icon: 'pi pi-shield', route: '/dashboard/autorizacion-arma' },
+    { label: 'Seguridad Social', icon: 'pi pi-heart', route: '/dashboard/seguridad-social' },
+    { label: 'Turnos', icon: 'pi pi-calendar', route: '/dashboard/turnos' },
   ];
 
   toggleDrawer(): void {

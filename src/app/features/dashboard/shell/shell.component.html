@@ -36,7 +36,18 @@
   <div class="shell-body">
     <!-- Sidebar desktop -->
     <aside class="shell-sidebar">
-      <p-panelMenu [model]="menuItems" styleClass="sidebar-menu" />
+      <nav class="sidebar-nav">
+        @for (item of navItems; track item.route) {
+          <a
+            class="nav-item"
+            [routerLink]="item.route"
+            routerLinkActive="active"
+          >
+            <i [class]="item.icon"></i>
+            <span>{{ item.label }}</span>
+          </a>
+        }
+      </nav>
     </aside>
 
     <!-- Main content -->
@@ -52,7 +63,18 @@
   (visibleChange)="drawerVisible.set($event)"
   position="left"
   header="Menú"
-  styleClass="mobile-drawer"
 >
-  <p-panelMenu [model]="menuItems" styleClass="sidebar-menu" (click)="drawerVisible.set(false)" />
+  <nav class="sidebar-nav">
+    @for (item of navItems; track item.route) {
+      <a
+        class="nav-item"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        (click)="drawerVisible.set(false)"
+      >
+        <i [class]="item.icon"></i>
+        <span>{{ item.label }}</span>
+      </a>
+    }
+  </nav>
 </p-drawer>
