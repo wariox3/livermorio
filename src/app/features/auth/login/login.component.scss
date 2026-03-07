@@ -30,6 +30,31 @@
   }
 }
 
+.login-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+
+  &__sep {
+    color: var(--p-text-muted-color);
+    font-size: 0.75rem;
+  }
+}
+
+.login-link {
+  font-size: 0.8125rem;
+  color: var(--p-text-muted-color);
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--p-primary-color);
+    text-decoration: underline;
+  }
+}
+
 .field {
   display: flex;
   flex-direction: column;

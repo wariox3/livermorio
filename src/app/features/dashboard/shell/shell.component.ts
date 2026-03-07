@@ -1,8 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { DrawerModule } from 'primeng/drawer';
-import { ButtonModule } from 'primeng/button';
-import { AvatarModule } from 'primeng/avatar';
 import { AuthService } from '../../auth/services/auth.service';
 
 interface NavItem {
@@ -19,8 +17,6 @@ interface NavItem {
     RouterLink,
     RouterLinkActive,
     DrawerModule,
-    ButtonModule,
-    AvatarModule,
   ],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
@@ -37,10 +33,10 @@ export class ShellComponent {
     { label: 'Reclamos', icon: 'pi pi-exclamation-triangle', route: '/dashboard/reclamos' },
     { label: 'Solicitudes', icon: 'pi pi-file', route: '/dashboard/solicitudes' },
     { label: 'Capacitaciones', icon: 'pi pi-book', route: '/dashboard/capacitaciones' },
-    { label: 'Certificado Laboral', icon: 'pi pi-id-card', route: '/dashboard/certificado-laboral' },
-    { label: 'Cert. Laboral Histórico', icon: 'pi pi-history', route: '/dashboard/certificado-laboral-historico' },
-    { label: 'Autorización de Arma', icon: 'pi pi-shield', route: '/dashboard/autorizacion-arma' },
-    { label: 'Seguridad Social', icon: 'pi pi-heart', route: '/dashboard/seguridad-social' },
+    { label: 'Certificado laboral', icon: 'pi pi-id-card', route: '/dashboard/certificado-laboral' },
+    { label: 'Cert. laboral histórico', icon: 'pi pi-history', route: '/dashboard/certificado-laboral-historico' },
+    { label: 'Autorización de arma', icon: 'pi pi-shield', route: '/dashboard/autorizacion-arma' },
+    { label: 'Seguridad social', icon: 'pi pi-heart', route: '/dashboard/seguridad-social' },
     { label: 'Turnos', icon: 'pi pi-calendar', route: '/dashboard/turnos' },
   ];
 
