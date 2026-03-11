@@ -1,8 +1,22 @@
 import { HttpInterceptorFn, HttpStatusCode } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs';
 import { AuthService } from '../../features/auth/services/auth.service';
 import { ToastService } from '../services/toast.service';
+import { API_ENDPOINTS } from '../constants/api-endpoints.constants';
+
+let isRefreshing = false;
+const refreshSubject$ = new BehaviorSubject<boolean | null>(null);
+
+const AUTH_SKIP_URLS = [
+  API_ENDPOINTS.auth.login,
+  API_ENDPOINTS.auth.refresh,
+  API_ENDPOINTS.auth.logout,
+];
+
+function isAuthUrl(url: string): boolean {
+  return AUTH_SKIP_URLS.some((endpoint) => url.includes(endpoint));
+}
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
@@ -16,8 +30,39 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       if (error.status === HttpStatusCode.Unauthorized) {
-        authService.clearSession();
-        return throwError(() => error);
+        if (isAuthUrl(req.url)) {
+          return throwError(() => error);
+        }
+
+        if (!isRefreshing) {
+          isRefreshing = true;
+          refreshSubject$.next(null);
+
+          return authService.refresh().pipe(
+            switchMap(() => {
+              isRefreshing = false;
+              refreshSubject$.next(true);
+              return next(req);
+            }),
+            catchError((refreshError) => {
+              isRefreshing = false;
+              refreshSubject$.next(false);
+              authService.clearSession();
+              return throwError(() => refreshError);
+            }),
+          );
+        }
+
+        return refreshSubject$.pipe(
+          filter((result) => result !== null),
+          take(1),
+          switchMap((success) => {
+            if (success) {
+              return next(req);
+            }
+            return throwError(() => error);
+          }),
+        );
       }
 
       if (error.status === HttpStatusCode.Forbidden) {
