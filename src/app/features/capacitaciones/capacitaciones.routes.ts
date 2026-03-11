@@ -5,7 +5,7 @@ export const CAPACITACIONES_ROUTES: Routes = [
     path: '',
     loadComponent: () =>
       import('./components/capacitaciones-list/capacitaciones-list.component').then(
-        m => m.CapacitacionesListComponent,
+        (m) => m.CapacitacionesListComponent,
       ),
   },
 ];

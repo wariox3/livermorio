@@ -24,9 +24,9 @@ export class AuthService {
         withCredentials: true, // permite que el navegador maneje las cookies
       })
       .pipe(
-        tap(response => {
+        tap((response) => {
           this._currentUser.set(response.user);
-        })
+        }),
       );
   }
 
