@@ -5,13 +5,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-ng serve          # Dev server at http://localhost:4200
+ng serve          # Dev server at http://localhost:4200 (uses proxy.conf.json)
 ng build          # Production build → dist/
 ng test           # Unit tests (Karma + Jasmine)
 ng test --include="**/foo.spec.ts"  # Run a single test file
+npm run lint      # ESLint + angular-eslint
+npm run lint:fix  # ESLint auto-fix
+npm run format    # Prettier format all src files
+npm run format:check  # Prettier check (CI)
+npm run test:ci   # Tests headless with coverage
+npm run release   # Bump version + changelog (commit-and-tag-version)
 ```
 
-Prettier is configured in `package.json` (printWidth 100, singleQuote, angular HTML parser). There is no lint script configured yet.
+Prettier is configured in `.prettierrc.json` (printWidth 100, singleQuote, angular HTML parser). ESLint is configured in `eslint.config.js` with angular-eslint + prettier. Husky runs lint-staged (eslint + prettier) on pre-commit and commitlint on commit-msg.
 
 ## Architecture
 
@@ -20,11 +26,13 @@ Prettier is configured in `package.json` (printWidth 100, singleQuote, angular H
 **App bootstrap**: `src/main.ts` → `appConfig` (`src/app/app.config.ts`) → `routes` (`src/app/app.routes.ts`). No NgModules — everything is standalone.
 
 **Global providers** (in `app.config.ts`):
+
 - `provideRouter` with `withComponentInputBinding()`
 - `provideHttpClient` with `authInterceptor` (attaches Bearer token from localStorage)
 - `providePrimeNG` with SemanticaPreset (extends Aura with navy/sky brand palette); dark mode toggled via `.dark-mode` CSS class
 
 **Routing structure**:
+
 ```
 /                   → redirects to /auth/login
 /auth/login         → LoginComponent  (guarded by publicGuard: redirects authenticated users to /dashboard)
@@ -33,10 +41,12 @@ Prettier is configured in `package.json` (printWidth 100, singleQuote, angular H
 ```
 
 **Feature layout** (`src/app/features/`):
+
 - `auth/` — login page only
 - `dashboard/` — shell layout (navbar + sidebar) with child routes
 
 **Core** (`src/app/core/`):
+
 - `services/auth.service.ts` — signal-based auth state; reads JWT from `localStorage` on init, decodes payload for `{ id, name, email }`; exposes `currentUser` (readonly signal) and `isAuthenticated` (computed)
 - `guards/auth.guard.ts` — redirects to `/auth/login?returnUrl=...` if not authenticated
 - `guards/public.guard.ts` — redirects to `/dashboard` if already authenticated
@@ -44,11 +54,12 @@ Prettier is configured in `package.json` (printWidth 100, singleQuote, angular H
 - `models/auth.model.ts` — `LoginRequest`, `LoginResponse`, `User`
 
 **Dashboard shell** (`features/dashboard/shell/`):
+
 - Signals: `drawerVisible` (mobile sidebar toggle), `currentUser` from `AuthService`
 - Desktop: fixed sidebar (`<p-panelmenu>`) hidden below 768 px; hamburger button hidden above 768 px
 - Mobile: `<p-drawer>` overlay opened by hamburger
 
-**Environment**: `src/environments/environment.ts` sets `apiUrl: 'http://localhost:3000/api'`. The backend must be running locally for auth to work.
+**Environment**: `src/environments/environment.ts` sets `apiUrl: '/api'` (proxied to `https://api.semanticaapi.com.co` via `proxy.conf.json` in dev). Production and staging environments use direct API URL via file replacements in `angular.json`.
 
 ## Conventions
 
