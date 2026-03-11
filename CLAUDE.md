@@ -15,14 +15,14 @@ Prettier is configured in `package.json` (printWidth 100, singleQuote, angular H
 
 ## Architecture
 
-**Stack**: Angular 20 (standalone components, signals) + PrimeNG 20.4.0 + Aura theme.
+**Stack**: Angular 20 (standalone components, signals) + PrimeNG 20.4.0 + SemanticaPreset (extends Aura with navy/sky brand palette).
 
 **App bootstrap**: `src/main.ts` → `appConfig` (`src/app/app.config.ts`) → `routes` (`src/app/app.routes.ts`). No NgModules — everything is standalone.
 
 **Global providers** (in `app.config.ts`):
 - `provideRouter` with `withComponentInputBinding()`
 - `provideHttpClient` with `authInterceptor` (attaches Bearer token from localStorage)
-- `providePrimeNG` with Aura theme; dark mode toggled via `.dark-mode` CSS class
+- `providePrimeNG` with SemanticaPreset (extends Aura with navy/sky brand palette); dark mode toggled via `.dark-mode` CSS class
 
 **Routing structure**:
 ```
