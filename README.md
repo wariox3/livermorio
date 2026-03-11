@@ -37,18 +37,28 @@ src/app/
 ├── app.config.ts            # Providers globales (router, HTTP, PrimeNG)
 ├── app.routes.ts            # Rutas raíz con lazy loading
 ├── core/
+│   ├── constants/
+│   │   ├── api-endpoints.constants.ts  # Endpoints de la API centralizados
+│   │   └── route-paths.constants.ts    # Rutas de la app centralizadas
 │   ├── guards/
 │   │   ├── auth.guard.ts        # Redirige a /auth/login si no autenticado
 │   │   └── public.guard.ts      # Redirige a /dashboard si ya autenticado
-│   └── interceptors/
-│       └── auth.interceptor.ts  # Agrega Bearer token a todas las peticiones
+│   ├── interceptors/
+│   │   ├── auth.interceptor.ts  # Agrega withCredentials para cookies HTTP-only
+│   │   └── error.interceptor.ts # Manejo global de errores + token refresh automático
+│   ├── models/
+│   │   └── auth.model.ts        # Re-exports de auth models
+│   ├── services/
+│   │   ├── base-http.service.ts # Servicio base para operaciones CRUD
+│   │   └── toast.service.ts     # Wrapper de notificaciones PrimeNG Toast
+│   └── index.ts                 # Barrel exports
 └── features/
     ├── landing/             # Página de inicio pública
     ├── auth/
     │   ├── login/           # Formulario de inicio de sesión
     │   ├── guards/          # Guards de autenticación
-    │   ├── services/        # AuthService (signals, JWT en localStorage)
-    │   └── models/          # LoginRequest, LoginResponse, User
+    │   ├── services/        # AuthService (signals, cookies HTTP-only)
+    │   └── models/          # LoginRequest, AuthResponse, Usuario
     └── dashboard/
         ├── shell/           # Layout: navbar + sidebar + router-outlet
         ├── inicio/          # Página de bienvenida
@@ -84,7 +94,18 @@ Todas las rutas bajo `/dashboard` están protegidas por `authGuard`. Las rutas d
 
 ## Autenticación
 
-La autenticación se maneja mediante **JWT almacenado en localStorage**. El `AuthService` mantiene el estado del usuario en un signal (`currentUser`) y expone `isAuthenticated` como computed signal. El interceptor agrega el header `Authorization: Bearer <token>` a todas las peticiones.
+La autenticación se maneja mediante **cookies HTTP-only** gestionadas por el backend. El `AuthService` mantiene el estado del usuario en un signal (`currentUser`) y expone `isAuthenticated` como computed signal.
+
+**Interceptors** (orden en `app.config.ts`):
+
+1. `authInterceptor` — agrega `withCredentials: true` a todas las peticiones para enviar cookies
+2. `errorInterceptor` — manejo global de errores HTTP:
+   - **401 Unauthorized**: intenta renovar el token vía `POST /auth/seguridad/refresh` antes de cerrar sesión. Si el refresh es exitoso, reintenta la request original automáticamente. Si falla, cierra sesión y redirige a login.
+   - Usa un patrón de cola con `BehaviorSubject` para que múltiples requests concurrentes con 401 solo disparen un único refresh.
+   - Los endpoints de auth (login, refresh, logout) no disparan el flujo de refresh para evitar loops.
+   - **403 Forbidden**: muestra toast de acceso denegado.
+   - **5xx**: muestra toast de error del servidor.
+   - **Error de conexión (status 0)**: muestra toast de error de conexión.
 
 ## Environments
 

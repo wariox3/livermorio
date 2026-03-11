@@ -28,7 +28,7 @@ Prettier is configured in `.prettierrc.json` (printWidth 100, singleQuote, angul
 **Global providers** (in `app.config.ts`):
 
 - `provideRouter` with `withComponentInputBinding()`
-- `provideHttpClient` with `authInterceptor` (attaches Bearer token from localStorage)
+- `provideHttpClient` with `authInterceptor` (adds `withCredentials`) + `errorInterceptor` (manejo global de errores HTTP y token refresh)
 - `providePrimeNG` with SemanticaPreset (extends Aura with navy/sky brand palette); dark mode toggled via `.dark-mode` CSS class
 
 **Routing structure**:
@@ -42,22 +42,35 @@ Prettier is configured in `.prettierrc.json` (printWidth 100, singleQuote, angul
 
 **Feature layout** (`src/app/features/`):
 
-- `auth/` — login page only
+- `auth/` — login, guards, auth service y modelos
 - `dashboard/` — shell layout (navbar + sidebar) with child routes
 
 **Core** (`src/app/core/`):
 
-- `services/auth.service.ts` — signal-based auth state; reads JWT from `localStorage` on init, decodes payload for `{ id, name, email }`; exposes `currentUser` (readonly signal) and `isAuthenticated` (computed)
+- `constants/api-endpoints.constants.ts` — endpoints de la API (`auth.login`, `auth.logout`, `auth.refresh`, `auth.me`)
+- `constants/route-paths.constants.ts` — rutas de la app centralizadas
 - `guards/auth.guard.ts` — redirects to `/auth/login?returnUrl=...` if not authenticated
 - `guards/public.guard.ts` — redirects to `/dashboard` if already authenticated
-- `interceptors/auth.interceptor.ts` — functional interceptor, adds `Authorization: Bearer <token>` header
-- `models/auth.model.ts` — `LoginRequest`, `LoginResponse`, `User`
+- `interceptors/auth.interceptor.ts` — functional interceptor, adds `withCredentials: true` for HTTP-only cookies
+- `interceptors/error.interceptor.ts` — manejo global de errores HTTP; ante 401 intenta refresh automático del token antes de cerrar sesión (patrón refresh + retry con cola de concurrencia)
+- `models/auth.model.ts` — re-exports de `features/auth/models`
+- `services/base-http.service.ts` — servicio base genérico para operaciones CRUD estandarizadas
+- `services/toast.service.ts` — servicio wrapper para notificaciones PrimeNG Toast
+- `index.ts` — barrel exports del core
+
+**Auth** (`src/app/features/auth/`):
+
+- `services/auth.service.ts` — signal-based auth state; `currentUser` (readonly signal), `isAuthenticated` (computed); métodos: `login()`, `me()`, `refresh()`, `logout()`, `clearSession()`
+- `models/auth.model.ts` — `LoginRequest`, `AuthResponse`, `Usuario`
+- `login/` — componente standalone de login
 
 **Dashboard shell** (`features/dashboard/shell/`):
 
 - Signals: `drawerVisible` (mobile sidebar toggle), `currentUser` from `AuthService`
 - Desktop: fixed sidebar (`<p-panelmenu>`) hidden below 768 px; hamburger button hidden above 768 px
 - Mobile: `<p-drawer>` overlay opened by hamburger
+
+**Autenticación**: HTTP-only cookies gestionadas por el backend. El `authInterceptor` agrega `withCredentials: true` a cada request. El `errorInterceptor` ante un 401 intenta `POST /auth/seguridad/refresh` para renovar las cookies; si falla, cierra sesión. Las requests a endpoints de auth (login, refresh, logout) no disparan el flujo de refresh para evitar loops. Se usa un patrón de cola con `BehaviorSubject` para que múltiples requests concurrentes con 401 solo disparen un único refresh.
 
 **Environment**: `src/environments/environment.ts` sets `apiUrl: '/api'` (proxied to `https://api.semanticaapi.com.co` via `proxy.conf.json` in dev). Production and staging environments use direct API URL via file replacements in `angular.json`.
 
