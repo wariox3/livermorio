@@ -48,8 +48,10 @@ export class LoginComponent {
 
     this.authService.login({ email: email!, password: password!, client_type: 'web' }).subscribe({
       next: () => {
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/dashboard';
-        this.router.navigateByUrl(returnUrl);
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+        const safeUrl =
+          returnUrl?.startsWith('/') && !returnUrl.startsWith('//') ? returnUrl : '/dashboard';
+        this.router.navigateByUrl(safeUrl);
       },
       error: (err) => {
         this.errorMessage.set(err?.error?.message ?? 'Credenciales inválidas.');
