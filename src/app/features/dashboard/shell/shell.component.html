@@ -31,11 +31,7 @@
     <aside class="shell-sidebar">
       <nav class="sidebar-nav">
         @for (item of navItems; track item.route) {
-          <a
-            class="nav-item"
-            [routerLink]="item.route"
-            routerLinkActive="active"
-          >
+          <a class="nav-item" [routerLink]="item.route" routerLinkActive="active">
             <i [class]="item.icon"></i>
             <span>{{ item.label }}</span>
           </a>
