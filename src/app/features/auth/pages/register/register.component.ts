@@ -12,7 +12,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../../services/auth.service';
-import { ROUTE_PATHS } from '../../../../core/constants/route-paths.constants';
 import { extractErrorMessage } from '../../../../core/utils/error.utils';
 
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -81,9 +80,6 @@ export class RegisterComponent {
         next: () => {
           this.submitted.set(true);
           this.isLoading.set(false);
-          setTimeout(() => {
-            this.router.navigate([ROUTE_PATHS.auth.login]);
-          }, 3000);
         },
         error: (err) => {
           this.errorMessage.set(
