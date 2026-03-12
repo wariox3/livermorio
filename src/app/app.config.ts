@@ -80,7 +80,10 @@ export const appConfig: ApplicationConfig = {
     MessageService,
     provideAppInitializer(() => {
       const auth = inject(AuthService);
-      return firstValueFrom(auth.me());
+      return firstValueFrom(auth.me()).catch(() => {
+        console.error('Failed to initialize user session');
+        return null;
+      });
     }),
     provideAnimationsAsync(),
     providePrimeNG({
