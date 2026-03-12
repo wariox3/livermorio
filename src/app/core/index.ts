@@ -3,6 +3,7 @@ export { publicGuard } from './guards/public.guard';
 export { authInterceptor } from './interceptors/auth.interceptor';
 export { errorInterceptor } from './interceptors/error.interceptor';
 export { ToastService } from './services/toast.service';
+export { TokenRefreshService } from './services/token-refresh.service';
 export { BaseHttpService } from './services/base-http.service';
 export type { PaginatedResponse, QueryParams } from './services/base-http.service';
 export { API_ENDPOINTS } from './constants/api-endpoints.constants';
