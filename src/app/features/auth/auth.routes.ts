@@ -29,5 +29,11 @@ export const AUTH_ROUTES: Routes = [
     loadComponent: () =>
       import('./pages/register/register.component').then((m) => m.RegisterComponent),
   },
+  {
+    path: 'verify-email',
+    canActivate: [publicGuard],
+    loadComponent: () =>
+      import('./pages/verify-email/verify-email.component').then((m) => m.VerifyEmailComponent),
+  },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, catchError, of, tap } from 'rxjs';
 import {
@@ -100,6 +100,16 @@ export class AuthService {
       `${environment.apiUrl}${API_ENDPOINTS.auth.register}`,
       data,
     );
+  }
+
+  /**
+   * Verifica la cuenta del usuario usando el token enviado por correo.
+   */
+  verifyEmail(token: string): Observable<void> {
+    const params = new HttpParams().set('token', token);
+    return this.http.get<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.verifyEmail}`, {
+      params,
+    });
   }
 
   /**

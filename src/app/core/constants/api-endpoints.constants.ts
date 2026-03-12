@@ -9,5 +9,6 @@ export const API_ENDPOINTS = {
     forgotPassword: `${AUTH}/forgot-password`,
     resetPassword: `${AUTH}/reset-password`,
     register: '/auth/user/registrar',
+    verifyEmail: '/auth/user/verificar',
   },
 } as const;

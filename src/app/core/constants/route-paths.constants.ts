@@ -4,6 +4,7 @@ export const ROUTE_PATHS = {
     forgotPassword: '/auth/forgot-password',
     resetPassword: '/auth/reset-password',
     register: '/auth/register',
+    verifyEmail: '/auth/verify-email',
   },
   dashboard: {
     root: '/dashboard',
