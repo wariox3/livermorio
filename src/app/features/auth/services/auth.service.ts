@@ -68,6 +68,25 @@ export class AuthService {
   }
 
   /**
+   * Envía un correo de recuperación de contraseña al email indicado.
+   */
+  forgotPassword(email: string): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.forgotPassword}`, {
+      email,
+    });
+  }
+
+  /**
+   * Establece una nueva contraseña usando el token de recuperación.
+   */
+  resetPassword(token: string, password: string): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.resetPassword}`, {
+      token,
+      password,
+    });
+  }
+
+  /**
    * Limpia la sesión local y redirige a login.
    * Expuesto públicamente para uso en el error interceptor.
    */

@@ -6,5 +6,7 @@ export const API_ENDPOINTS = {
     logout: `${AUTH}/logout`,
     refresh: `${AUTH}/refresh`,
     me: `${AUTH}/me`,
+    forgotPassword: `${AUTH}/forgot-password`,
+    resetPassword: `${AUTH}/reset-password`,
   },
 } as const;

@@ -7,5 +7,17 @@ export const AUTH_ROUTES: Routes = [
     canActivate: [publicGuard],
     loadComponent: () => import('./login/login.component').then((m) => m.LoginComponent),
   },
+  {
+    path: 'forgot-password',
+    canActivate: [publicGuard],
+    loadComponent: () =>
+      import('./forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent),
+  },
+  {
+    path: 'reset-password',
+    canActivate: [publicGuard],
+    loadComponent: () =>
+      import('./reset-password/reset-password.component').then((m) => m.ResetPasswordComponent),
+  },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
