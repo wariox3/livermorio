@@ -52,24 +52,68 @@
           }
 
           <div class="field">
-            <label for="name" class="field__label">Nombre completo</label>
+            <label for="nombres" class="field__label">Nombres</label>
             <input
               pInputText
-              id="name"
+              id="nombres"
               type="text"
-              formControlName="name"
+              formControlName="nombres"
               fluid
-              placeholder="Juan Pérez"
-              [invalid]="nameControl.invalid && nameControl.touched"
-              aria-describedby="name-error"
+              placeholder="Juan"
+              [invalid]="nombresControl.invalid && nombresControl.touched"
+              aria-describedby="nombres-error"
             />
-            @if (nameControl.invalid && nameControl.touched) {
-              <small id="name-error" class="field__error">
-                @if (nameControl.hasError('required')) {
-                  El nombre es requerido.
-                } @else if (nameControl.hasError('minlength')) {
+            @if (nombresControl.invalid && nombresControl.touched) {
+              <small id="nombres-error" class="field__error">
+                @if (nombresControl.hasError('required')) {
+                  Los nombres son requeridos.
+                } @else if (nombresControl.hasError('minlength')) {
                   Mínimo 2 caracteres.
                 }
+              </small>
+            }
+          </div>
+
+          <div class="field">
+            <label for="apellidos" class="field__label">Apellidos</label>
+            <input
+              pInputText
+              id="apellidos"
+              type="text"
+              formControlName="apellidos"
+              fluid
+              placeholder="Pérez"
+              [invalid]="apellidosControl.invalid && apellidosControl.touched"
+              aria-describedby="apellidos-error"
+            />
+            @if (apellidosControl.invalid && apellidosControl.touched) {
+              <small id="apellidos-error" class="field__error">
+                @if (apellidosControl.hasError('required')) {
+                  Los apellidos son requeridos.
+                } @else if (apellidosControl.hasError('minlength')) {
+                  Mínimo 2 caracteres.
+                }
+              </small>
+            }
+          </div>
+
+          <div class="field">
+            <label for="numero_identificacion" class="field__label">
+              Número de identificación
+            </label>
+            <input
+              pInputText
+              id="numero_identificacion"
+              type="text"
+              formControlName="numero_identificacion"
+              fluid
+              placeholder="1234567890"
+              [invalid]="identificacionControl.invalid && identificacionControl.touched"
+              aria-describedby="identificacion-error"
+            />
+            @if (identificacionControl.invalid && identificacionControl.touched) {
+              <small id="identificacion-error" class="field__error">
+                El número de identificación es requerido.
               </small>
             }
           </div>

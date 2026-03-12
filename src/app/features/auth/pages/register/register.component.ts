@@ -13,6 +13,7 @@ import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../../services/auth.service';
 import { ROUTE_PATHS } from '../../../../core/constants/route-paths.constants';
+import { extractErrorMessage } from '../../../../core/utils/error.utils';
 
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
@@ -47,7 +48,9 @@ export class RegisterComponent {
 
   readonly form = this.fb.group(
     {
-      name: ['', [Validators.required, Validators.minLength(2)]],
+      nombres: ['', [Validators.required, Validators.minLength(2)]],
+      apellidos: ['', [Validators.required, Validators.minLength(2)]],
+      numero_identificacion: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
@@ -64,27 +67,43 @@ export class RegisterComponent {
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
-    const { name, email, password } = this.form.getRawValue();
+    const { nombres, apellidos, numero_identificacion, email, password } = this.form.getRawValue();
 
-    this.authService.register({ name: name!, email: email!, password: password! }).subscribe({
-      next: () => {
-        this.submitted.set(true);
-        this.isLoading.set(false);
-        setTimeout(() => {
-          this.router.navigate([ROUTE_PATHS.auth.login]);
-        }, 3000);
-      },
-      error: (err) => {
-        this.errorMessage.set(
-          err?.error?.message ?? 'No se pudo completar el registro. Inténtalo de nuevo.',
-        );
-        this.isLoading.set(false);
-      },
-    });
+    this.authService
+      .register({
+        nombres: nombres!,
+        apellidos: apellidos!,
+        numero_identificacion: numero_identificacion!,
+        email: email!,
+        password: password!,
+      })
+      .subscribe({
+        next: () => {
+          this.submitted.set(true);
+          this.isLoading.set(false);
+          setTimeout(() => {
+            this.router.navigate([ROUTE_PATHS.auth.login]);
+          }, 3000);
+        },
+        error: (err) => {
+          this.errorMessage.set(
+            extractErrorMessage(err, 'No se pudo completar el registro. Inténtalo de nuevo.'),
+          );
+          this.isLoading.set(false);
+        },
+      });
   }
 
-  get nameControl() {
-    return this.form.controls.name;
+  get nombresControl() {
+    return this.form.controls.nombres;
+  }
+
+  get apellidosControl() {
+    return this.form.controls.apellidos;
+  }
+
+  get identificacionControl() {
+    return this.form.controls.numero_identificacion;
   }
 
   get emailControl() {

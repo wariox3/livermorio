@@ -16,11 +16,25 @@ export interface Usuario {
 }
 
 export interface RegisterRequest {
-  name: string;
   email: string;
   password: string;
+  nombres: string;
+  apellidos: string;
+  numero_identificacion: string;
+}
+
+export interface RegisteredUser {
+  id: number;
+  email: string;
+  role: string;
+  tenant_id: number;
+  nombres: string;
+  apellidos: string;
+  numero_identificacion: string;
+  is_verified: boolean;
 }
 
 export interface RegisterResponse {
-  message: string;
+  user: RegisteredUser;
+  verification_link: string;
 }
