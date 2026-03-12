@@ -1,10 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { CardModule } from 'primeng/card';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../services/auth.service';
 
@@ -13,10 +12,10 @@ import { AuthService } from '../services/auth.service';
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    RouterLink,
     ButtonModule,
     InputTextModule,
     PasswordModule,
-    CardModule,
     MessageModule,
   ],
   templateUrl: './login.component.html',
@@ -49,8 +48,10 @@ export class LoginComponent {
 
     this.authService.login({ email: email!, password: password!, client_type: 'web' }).subscribe({
       next: () => {
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/dashboard';
-        this.router.navigateByUrl(returnUrl);
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+        const safeUrl =
+          returnUrl?.startsWith('/') && !returnUrl.startsWith('//') ? returnUrl : '/dashboard';
+        this.router.navigateByUrl(safeUrl);
       },
       error: (err) => {
         this.errorMessage.set(err?.error?.message ?? 'Credenciales inválidas.');
@@ -59,6 +60,10 @@ export class LoginComponent {
     });
   }
 
-  get emailControl() { return this.form.controls.email; }
-  get passwordControl() { return this.form.controls.password; }
+  get emailControl() {
+    return this.form.controls.email;
+  }
+  get passwordControl() {
+    return this.form.controls.password;
+  }
 }

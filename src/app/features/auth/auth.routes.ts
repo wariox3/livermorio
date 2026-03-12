@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
-import { publicGuard } from './guards/public.guard';
+import { publicGuard } from '../../core/guards/public.guard';
 
 export const AUTH_ROUTES: Routes = [
   {
     path: 'login',
     canActivate: [publicGuard],
-    loadComponent: () =>
-      import('./login/login.component').then(m => m.LoginComponent),
+    loadComponent: () => import('./login/login.component').then((m) => m.LoginComponent),
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

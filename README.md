@@ -4,25 +4,30 @@ Portal de autogestión para empleados. Permite consultar y gestionar informació
 
 ## Stack
 
-| Tecnología | Versión |
-|---|---|
-| Angular | 20 (standalone components, signals) |
-| PrimeNG | 20.4.0 (tema Aura) |
-| Fuente | Geist |
+| Tecnología | Versión                             |
+| ---------- | ----------------------------------- |
+| Angular    | 20 (standalone components, signals) |
+| PrimeNG    | 20.4.0 (tema Aura)                  |
+| Fuente     | Geist                               |
 
 ## Requisitos
 
-- Node.js 20+
+- Node.js 22+
 - Angular CLI 20
-- Backend corriendo en `http://localhost:3000/api`
+- Backend en `https://api.semanticaapi.com.co` (proxied en dev como `/api`)
 
 ## Comandos
 
 ```bash
-ng serve                                   # Dev server → http://localhost:4200
-ng build                                   # Build de producción → dist/
-ng test                                    # Tests unitarios (Karma + Jasmine)
-ng test --include="**/foo.spec.ts"         # Ejecutar un test específico
+npm start                              # Dev server → http://localhost:4200
+npm run build                          # Build de producción → dist/
+npm test                               # Tests unitarios (Karma + Jasmine)
+npm run test:ci                        # Tests headless con coverage (CI)
+npm run lint                           # Verificar linting
+npm run lint:fix                       # Corregir linting automáticamente
+npm run format                         # Formatear código
+npm run format:check                   # Verificar formato sin modificar
+npm run release                        # Bump de versión + changelog
 ```
 
 ## Estructura del proyecto
@@ -30,19 +35,29 @@ ng test --include="**/foo.spec.ts"         # Ejecutar un test específico
 ```
 src/app/
 ├── app.config.ts            # Providers globales (router, HTTP, PrimeNG)
-├── app.routes.ts            # Rutas raíz
+├── app.routes.ts            # Rutas raíz con lazy loading
 ├── core/
+│   ├── constants/
+│   │   ├── api-endpoints.constants.ts  # Endpoints de la API centralizados
+│   │   └── route-paths.constants.ts    # Rutas de la app centralizadas
 │   ├── guards/
 │   │   ├── auth.guard.ts        # Redirige a /auth/login si no autenticado
 │   │   └── public.guard.ts      # Redirige a /dashboard si ya autenticado
-│   └── interceptors/
-│       └── auth.interceptor.ts  # Agrega withCredentials a todas las peticiones
+│   ├── interceptors/
+│   │   ├── auth.interceptor.ts  # Agrega withCredentials para cookies HTTP-only
+│   │   └── error.interceptor.ts # Manejo global de errores + token refresh automático
+│   ├── models/
+│   │   └── auth.model.ts        # Re-exports de auth models
+│   ├── services/
+│   │   ├── base-http.service.ts # Servicio base para operaciones CRUD
+│   │   └── toast.service.ts     # Wrapper de notificaciones PrimeNG Toast
+│   └── index.ts                 # Barrel exports
 └── features/
     ├── landing/             # Página de inicio pública
     ├── auth/
     │   ├── login/           # Formulario de inicio de sesión
     │   ├── guards/          # Guards de autenticación
-    │   ├── services/        # AuthService (signals, HTTP-only cookies)
+    │   ├── services/        # AuthService (signals, cookies HTTP-only)
     │   └── models/          # LoginRequest, AuthResponse, Usuario
     └── dashboard/
         ├── shell/           # Layout: navbar + sidebar + router-outlet
@@ -75,11 +90,32 @@ src/app/
 /dashboard/turnos             → Turnos
 ```
 
-Todas las rutas bajo `/dashboard` están protegidas por `authGuard`. Todas las rutas de `/auth` están protegidas por `publicGuard`.
+Todas las rutas bajo `/dashboard` están protegidas por `authGuard`. Las rutas de `/auth` usan `publicGuard`.
 
 ## Autenticación
 
-La autenticación se maneja mediante **HTTP-only cookies** gestionadas por el backend. El `AuthService` mantiene el estado del usuario en un signal (`currentUser`) y expone `isAuthenticated` como computed signal. No se almacena ningún token en `localStorage`.
+La autenticación se maneja mediante **cookies HTTP-only** gestionadas por el backend. El `AuthService` mantiene el estado del usuario en un signal (`currentUser`) y expone `isAuthenticated` como computed signal.
+
+**Interceptors** (orden en `app.config.ts`):
+
+1. `authInterceptor` — agrega `withCredentials: true` a todas las peticiones para enviar cookies
+2. `errorInterceptor` — manejo global de errores HTTP:
+   - **401 Unauthorized**: intenta renovar el token vía `POST /auth/seguridad/refresh` antes de cerrar sesión. Si el refresh es exitoso, reintenta la request original automáticamente. Si falla, cierra sesión y redirige a login.
+   - Usa un patrón de cola con `BehaviorSubject` para que múltiples requests concurrentes con 401 solo disparen un único refresh.
+   - Los endpoints de auth (login, refresh, logout) no disparan el flujo de refresh para evitar loops.
+   - **403 Forbidden**: muestra toast de acceso denegado.
+   - **5xx**: muestra toast de error del servidor.
+   - **Error de conexión (status 0)**: muestra toast de error de conexión.
+
+## Environments
+
+| Configuración | Archivo                  | API URL                           |
+| ------------- | ------------------------ | --------------------------------- |
+| Development   | `environment.ts`         | `/api` (proxy a la API real)      |
+| Staging       | `environment.staging.ts` | `https://api.semanticaapi.com.co` |
+| Production    | `environment.prod.ts`    | `https://api.semanticaapi.com.co` |
+
+El proxy de desarrollo está configurado en `proxy.conf.json` y se activa automáticamente con `ng serve`.
 
 ## Convenciones
 
@@ -88,3 +124,11 @@ La autenticación se maneja mediante **HTTP-only cookies** gestionadas por el ba
 - Inyección de dependencias con `inject()` en el cuerpo de la clase
 - Nuevas rutas van en un archivo `<feature>.routes.ts` y se cargan lazy desde `app.routes.ts`
 - SCSS usa design tokens de PrimeNG (`var(--p-surface-0)`, `var(--p-primary-color)`, etc.) — evitar colores hardcodeados
+- Commits convencionales obligatorios (validados por Husky + commitlint)
+
+## Documentación
+
+| Documento                            | Contenido                                    |
+| ------------------------------------ | -------------------------------------------- |
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | Flujo de trabajo, ramas, commits, PRs, hooks |
+| [CLAUDE.md](./CLAUDE.md)             | Instrucciones para Claude Code               |
