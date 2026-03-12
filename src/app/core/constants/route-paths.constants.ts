@@ -3,6 +3,7 @@ export const ROUTE_PATHS = {
     login: '/auth/login',
     forgotPassword: '/auth/forgot-password',
     resetPassword: '/auth/reset-password',
+    register: '/auth/register',
   },
   dashboard: {
     root: '/dashboard',

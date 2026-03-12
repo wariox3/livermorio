@@ -2,7 +2,13 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, catchError, of, tap } from 'rxjs';
-import { AuthResponse, LoginRequest, Usuario } from '../models/auth.model';
+import {
+  AuthResponse,
+  LoginRequest,
+  RegisterRequest,
+  RegisterResponse,
+  Usuario,
+} from '../models/auth.model';
 import { environment } from '../../../../environments/environment';
 import { API_ENDPOINTS } from '../../../core/constants/api-endpoints.constants';
 import { ROUTE_PATHS } from '../../../core/constants/route-paths.constants';
@@ -84,6 +90,16 @@ export class AuthService {
       token,
       password,
     });
+  }
+
+  /**
+   * Registra un nuevo usuario en el sistema.
+   */
+  register(data: RegisterRequest): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(
+      `${environment.apiUrl}${API_ENDPOINTS.auth.register}`,
+      data,
+    );
   }
 
   /**

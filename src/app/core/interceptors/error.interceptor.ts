@@ -13,6 +13,7 @@ const AUTH_SKIP_URLS = [
   API_ENDPOINTS.auth.me,
   API_ENDPOINTS.auth.forgotPassword,
   API_ENDPOINTS.auth.resetPassword,
+  API_ENDPOINTS.auth.register,
 ];
 
 function isAuthUrl(url: string): boolean {
