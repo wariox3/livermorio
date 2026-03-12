@@ -5,24 +5,29 @@ export const AUTH_ROUTES: Routes = [
   {
     path: 'login',
     canActivate: [publicGuard],
-    loadComponent: () => import('./login/login.component').then((m) => m.LoginComponent),
+    loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'forgot-password',
     canActivate: [publicGuard],
     loadComponent: () =>
-      import('./forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent),
+      import('./pages/forgot-password/forgot-password.component').then(
+        (m) => m.ForgotPasswordComponent,
+      ),
   },
   {
     path: 'reset-password',
     canActivate: [publicGuard],
     loadComponent: () =>
-      import('./reset-password/reset-password.component').then((m) => m.ResetPasswordComponent),
+      import('./pages/reset-password/reset-password.component').then(
+        (m) => m.ResetPasswordComponent,
+      ),
   },
   {
     path: 'register',
     canActivate: [publicGuard],
-    loadComponent: () => import('./register/register.component').then((m) => m.RegisterComponent),
+    loadComponent: () =>
+      import('./pages/register/register.component').then((m) => m.RegisterComponent),
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

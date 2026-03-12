@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-forgot-password',

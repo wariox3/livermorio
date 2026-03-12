@@ -11,8 +11,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
-import { AuthService } from '../services/auth.service';
-import { ROUTE_PATHS } from '../../../core/constants/route-paths.constants';
+import { AuthService } from '../../services/auth.service';
+import { ROUTE_PATHS } from '../../../../core/constants/route-paths.constants';
 
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
