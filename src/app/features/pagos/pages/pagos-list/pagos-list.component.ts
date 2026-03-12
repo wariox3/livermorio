@@ -9,6 +9,7 @@ import {
 } from '../../../../shared';
 import { PagosService } from '../../services/pagos.service';
 import { Pago } from '../../models/pago.model';
+import { extractErrorMessage } from '../../../../core/utils/error.utils';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 
@@ -49,7 +50,7 @@ export class PagosListComponent implements OnInit {
         this.loading.set(false);
       },
       error: (err) => {
-        this.error.set(err?.error?.message ?? 'No se pudieron cargar los pagos.');
+        this.error.set(extractErrorMessage(err, 'No se pudieron cargar los pagos.'));
         this.loading.set(false);
       },
     });

@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../../services/auth.service';
+import { extractErrorMessage } from '../../../../core/utils/error.utils';
 
 @Component({
   selector: 'app-forgot-password',
@@ -42,7 +43,7 @@ export class ForgotPasswordComponent {
         this.isLoading.set(false);
       },
       error: (err) => {
-        this.errorMessage.set(err?.error?.message ?? 'Ocurrió un error. Intenta de nuevo.');
+        this.errorMessage.set(extractErrorMessage(err, 'Ocurrió un error. Intenta de nuevo.'));
         this.isLoading.set(false);
       },
     });

@@ -8,3 +8,4 @@ export { BaseHttpService } from './services/base-http.service';
 export type { PaginatedResponse, QueryParams } from './services/base-http.service';
 export { API_ENDPOINTS } from './constants/api-endpoints.constants';
 export { ROUTE_PATHS } from './constants/route-paths.constants';
+export { extractErrorMessage } from './utils/error.utils';

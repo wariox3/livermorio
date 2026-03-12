@@ -6,6 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../../services/auth.service';
+import { extractErrorMessage } from '../../../../core/utils/error.utils';
 
 @Component({
   selector: 'app-login',
@@ -54,7 +55,7 @@ export class LoginComponent {
         this.router.navigateByUrl(safeUrl);
       },
       error: (err) => {
-        this.errorMessage.set(err?.error?.message ?? 'Credenciales inválidas.');
+        this.errorMessage.set(extractErrorMessage(err, 'Credenciales inválidas.'));
         this.isLoading.set(false);
       },
     });

@@ -12,6 +12,7 @@ import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../../services/auth.service';
 import { ROUTE_PATHS } from '../../../../core/constants/route-paths.constants';
+import { extractErrorMessage } from '../../../../core/utils/error.utils';
 
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
@@ -78,8 +79,10 @@ export class ResetPasswordComponent implements OnInit {
       },
       error: (err) => {
         this.errorMessage.set(
-          err?.error?.message ??
+          extractErrorMessage(
+            err,
             'No se pudo restablecer la contraseña. El enlace puede haber expirado.',
+          ),
         );
         this.isLoading.set(false);
       },
