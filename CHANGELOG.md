@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.1](https://github.com/tamerlantian/livermorio/compare/v0.0.0...v0.0.1) (2026-03-12)
+
+### Bug Fixes
+
+- **interceptor:** add me endpoint to AUTH_SKIP_URLS to prevent redirect loop ([7174c2d](https://github.com/tamerlantian/livermorio/commit/7174c2d70cca6ee36bccd08333059fa7918302ef))
+
 ## 0.0.0 (2026-03-12)
 
 ### Features
