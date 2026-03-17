@@ -1,0 +1,41 @@
+<div class="programacion-section">
+  <div class="programacion-section__header">
+    <div class="programacion-section__header-icon">
+      <i class="pi pi-table"></i>
+    </div>
+    <div class="programacion-section__header-text">
+      <span class="programacion-section__title">Programación del mes</span>
+      <span class="programacion-section__subtitle">Detalle completo de turnos asignados</span>
+    </div>
+  </div>
+
+  <p-table
+    [value]="programaciones()"
+    [scrollable]="true"
+    scrollDirection="both"
+    styleClass="programacion-table"
+  >
+    <ng-template #header>
+      <tr>
+        <th style="min-width: 180px" class="frozen-col">Cliente</th>
+        <th style="min-width: 200px" class="frozen-col">Puesto</th>
+        @for (dia of diasDelMes(); track dia) {
+          <th style="min-width: 48px; text-align: center" [class.dia-actual]="dia === diaActual()">
+            {{ dia }}
+          </th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template #body let-prog>
+      <tr>
+        <td style="min-width: 180px" class="frozen-col">{{ prog.tercero_nombre_corto }}</td>
+        <td style="min-width: 200px" class="frozen-col">{{ prog.puesto_nombre }}</td>
+        @for (dia of diasDelMes(); track dia) {
+          <td style="min-width: 48px; text-align: center" [class.dia-actual]="dia === diaActual()">
+            {{ prog['dia_' + dia] || '-' }}
+          </td>
+        }
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

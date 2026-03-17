@@ -85,6 +85,7 @@ Prettier is configured in `.prettierrc.json` (printWidth 100, singleQuote, angul
 ## Next Steps
 
 - Siempre usa buenas prácticas de programación
+- Necesito que cuando crees textos no los pongas asi "Prueba para Ejemplo" sino "Prueba para ejemplo", etc.
 - Escribe código limpio y mantenible
 - Documenta el código de forma clara y concisa
 - Sigue las convenciones del proyecto para la arquitectura y estructura de archivos

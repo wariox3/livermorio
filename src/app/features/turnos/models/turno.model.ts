@@ -1,0 +1,50 @@
+export interface ProgramacionEmpleado {
+  codigo_programacion_pk: number;
+  puesto_nombre: string;
+  puesto_direccion: string;
+  coordinador_nombre: string;
+  programador_nombre: string;
+  codigo_modalidad_fk: string;
+  tercero_nombre_corto: string;
+  dia_1: string | null;
+  dia_2: string | null;
+  dia_3: string | null;
+  dia_4: string | null;
+  dia_5: string | null;
+  dia_6: string | null;
+  dia_7: string | null;
+  dia_8: string | null;
+  dia_9: string | null;
+  dia_10: string | null;
+  dia_11: string | null;
+  dia_12: string | null;
+  dia_13: string | null;
+  dia_14: string | null;
+  dia_15: string | null;
+  dia_16: string | null;
+  dia_17: string | null;
+  dia_18: string | null;
+  dia_19: string | null;
+  dia_20: string | null;
+  dia_21: string | null;
+  dia_22: string | null;
+  dia_23: string | null;
+  dia_24: string | null;
+  dia_25: string | null;
+  dia_26: string | null;
+  dia_27: string | null;
+  dia_28: string | null;
+  dia_29: string | null;
+  dia_30: string | null;
+  dia_31: string | null;
+}
+
+export interface TurnoDelDia {
+  puesto_nombre: string;
+  puesto_direccion: string;
+  coordinador_nombre: string;
+  programador_nombre: string;
+  codigo_modalidad_fk: string;
+  tercero_nombre_corto: string;
+  turno: string;
+}

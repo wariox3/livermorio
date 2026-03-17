@@ -13,6 +13,8 @@ export interface Usuario {
   id: number;
   name: string;
   email: string;
+  role: string;
+  empleado_id: number;
 }
 
 export interface RegisterRequest {

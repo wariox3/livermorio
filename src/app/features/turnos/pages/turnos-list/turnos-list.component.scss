@@ -1,0 +1,14 @@
+.turnos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+app-programacion-table {
+  display: block;
+  margin-top: 1.5rem;
+}
