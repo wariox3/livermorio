@@ -14,6 +14,14 @@ const TURNO_COLORES = [
   'var(--p-cyan-500)',
   'var(--p-pink-500)',
   'var(--p-indigo-500)',
+  'var(--p-lime-500)',
+  'var(--p-amber-500)',
+  'var(--p-violet-500)',
+  'var(--p-emerald-500)',
+  'var(--p-rose-500)',
+  'var(--p-sky-500)',
+  'var(--p-fuchsia-500)',
+  'var(--p-slate-500)',
 ];
 
 @Component({
