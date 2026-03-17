@@ -39,6 +39,18 @@ export interface ProgramacionEmpleado {
   dia_31: string | null;
 }
 
+export interface DiaCalendario {
+  dia: number;
+  esDelMes: boolean;
+  turnos: TurnoCalendario[];
+}
+
+export interface TurnoCalendario {
+  codigo: string;
+  cliente: string;
+  puesto: string;
+}
+
 export interface TurnoDelDia {
   puesto_nombre: string;
   puesto_direccion: string;

@@ -7,6 +7,7 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
 import { TurnoCardComponent } from '../../components/turno-card/turno-card.component';
 import { ProgramacionTableComponent } from '../../components/programacion-table/programacion-table.component';
+import { ProgramacionCalendarComponent } from '../../components/programacion-calendar/programacion-calendar.component';
 
 @Component({
   selector: 'app-turnos-list',
@@ -16,6 +17,7 @@ import { ProgramacionTableComponent } from '../../components/programacion-table/
     LoadingSpinnerComponent,
     TurnoCardComponent,
     ProgramacionTableComponent,
+    ProgramacionCalendarComponent,
   ],
   templateUrl: './turnos-list.component.html',
   styleUrl: './turnos-list.component.scss',
