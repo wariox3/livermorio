@@ -1,8 +1,14 @@
 <div class="turno-card" [class.turno-card--active]="activo()">
   <div class="turno-card__header">
-    <div class="turno-card__header-icon">
-      <i [class]="icono()"></i>
-    </div>
+    @if (turno(); as t) {
+      <div class="turno-card__shift-badge">
+        <span class="turno-card__shift-code">{{ t.turno }}</span>
+      </div>
+    } @else {
+      <div class="turno-card__header-icon">
+        <i [class]="icono()"></i>
+      </div>
+    }
     <div class="turno-card__header-text">
       <span class="turno-card__header-title">{{ titulo() }}</span>
       <span class="turno-card__header-hint">{{ subtitulo() }}</span>
@@ -12,10 +18,6 @@
   @if (turno(); as turno) {
     <div class="turno-card__body">
       <div class="turno-card__badge-row">
-        <div class="turno-card__badge">
-          <span class="turno-card__badge-label">Turno</span>
-          <span class="turno-card__badge-code">{{ turno.turno }}</span>
-        </div>
         <div class="turno-card__tags">
           <span class="turno-card__tag">{{ turno.tercero_nombre_corto }}</span>
         </div>

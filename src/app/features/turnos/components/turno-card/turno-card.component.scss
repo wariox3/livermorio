@@ -40,25 +40,16 @@
       color: var(--brand-white);
     }
 
+    .turno-card__shift-badge {
+      background: var(--brand-navy);
+    }
+
+    .turno-card__shift-code {
+      color: var(--brand-white);
+    }
+
     .turno-card__header-title {
       color: var(--brand-navy);
-    }
-
-    .turno-card__badge {
-      background: linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--brand-navy) 8%, transparent),
-        color-mix(in srgb, var(--brand-blue) 12%, transparent)
-      );
-      border-color: color-mix(in srgb, var(--brand-blue) 25%, transparent);
-    }
-
-    .turno-card__badge-code {
-      color: var(--brand-navy);
-    }
-
-    .turno-card__badge-label {
-      color: var(--brand-blue);
     }
 
     .turno-card__tag {
@@ -99,16 +90,16 @@
       color: var(--brand-blue);
     }
 
+    .turno-card__shift-badge {
+      background: color-mix(in srgb, var(--brand-blue) 20%, transparent);
+    }
+
+    .turno-card__shift-code {
+      color: var(--brand-blue);
+    }
+
     .turno-card__header-title {
       color: var(--brand-blue);
-    }
-
-    .turno-card__badge-code {
-      color: var(--brand-blue);
-    }
-
-    .turno-card__badge-label {
-      color: color-mix(in srgb, var(--brand-blue) 70%, white);
     }
 
     .turno-card__tag {
@@ -141,6 +132,26 @@
     transition: background 0.2s ease;
   }
 
+  &__shift-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    background: var(--p-surface-100);
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+  }
+
+  &__shift-code {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--p-text-color);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
   &__header-text {
     display: flex;
     flex-direction: column;
@@ -168,41 +179,11 @@
     gap: 1.25rem;
   }
 
-  // --- Badge row (shift code + tags) ---
+  // --- Badge row (tags) ---
   &__badge-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 1rem;
-  }
-
-  &__badge {
-    display: flex;
-    align-items: baseline;
-    gap: 0.625rem;
-    padding: 0.5rem 0.875rem;
-    border-radius: 0.5rem;
-    background: var(--p-surface-100);
-    border: 1px solid var(--p-surface-200);
-    transition:
-      background 0.2s ease,
-      border-color 0.2s ease;
-  }
-
-  &__badge-label {
-    font-size: 0.675rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--p-text-muted-color);
-  }
-
-  &__badge-code {
-    font-size: 1.375rem;
-    font-weight: 700;
-    color: var(--p-text-color);
-    letter-spacing: -0.02em;
-    line-height: 1;
   }
 
   // --- Tags ---
