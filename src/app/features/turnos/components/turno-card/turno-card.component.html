@@ -1,0 +1,70 @@
+<div class="turno-card" [class.turno-card--active]="activo()">
+  <div class="turno-card__header">
+    @if (turno(); as t) {
+      <div class="turno-card__shift-badge">
+        <span class="turno-card__shift-code">{{ t.turno }}</span>
+      </div>
+    } @else {
+      <div class="turno-card__header-icon">
+        <i [class]="icono()"></i>
+      </div>
+    }
+    <div class="turno-card__header-text">
+      <span class="turno-card__header-title">{{ titulo() }}</span>
+      <span class="turno-card__header-hint">{{ subtitulo() }}</span>
+    </div>
+  </div>
+
+  @if (turno(); as turno) {
+    <div class="turno-card__body">
+      <div class="turno-card__badge-row">
+        <div class="turno-card__tags">
+          <span class="turno-card__tag">{{ turno.tercero_nombre_corto }}</span>
+        </div>
+      </div>
+
+      <div class="turno-card__details">
+        <div class="turno-card__detail-group">
+          <div class="turno-card__detail">
+            <div class="turno-card__detail-icon">
+              <i class="pi pi-building"></i>
+            </div>
+            <div class="turno-card__detail-content">
+              <span class="turno-card__detail-value">{{ turno.puesto_nombre }}</span>
+              <span class="turno-card__detail-sub">{{ turno.puesto_direccion }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="turno-card__detail-group turno-card__detail-group--people">
+          <div class="turno-card__detail">
+            <div class="turno-card__detail-icon">
+              <i class="pi pi-user"></i>
+            </div>
+            <div class="turno-card__detail-content">
+              <span class="turno-card__detail-label">Coordinador</span>
+              <span class="turno-card__detail-value">{{ turno.coordinador_nombre }}</span>
+            </div>
+          </div>
+          <div class="turno-card__detail">
+            <div class="turno-card__detail-icon">
+              <i class="pi pi-user"></i>
+            </div>
+            <div class="turno-card__detail-content">
+              <span class="turno-card__detail-label">Programador</span>
+              <span class="turno-card__detail-value">{{ turno.programador_nombre }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="turno-card__empty">
+      <div class="turno-card__empty-icon">
+        <i [class]="emptyIcon()"></i>
+      </div>
+      <span class="turno-card__empty-title">{{ emptyTitle() }}</span>
+      <span class="turno-card__empty-sub">{{ emptyMessage() }}</span>
+    </div>
+  }
+</div>

@@ -96,6 +96,10 @@
           }
         </div>
 
+        <div class="field__forgot">
+          <a routerLink="/auth/forgot-password" class="forgot-link">¿Olvidaste tu contraseña?</a>
+        </div>
+
         <p-button
           type="submit"
           label="Ingresar"
@@ -104,6 +108,11 @@
           [loading]="isLoading()"
           [disabled]="isLoading()"
         />
+
+        <p class="form-footer">
+          ¿No tienes cuenta?
+          <a routerLink="/auth/register" class="form-footer__link">Regístrate</a>
+        </p>
       </form>
     </div>
   </div>

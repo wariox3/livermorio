@@ -6,5 +6,12 @@ export const API_ENDPOINTS = {
     logout: `${AUTH}/logout`,
     refresh: `${AUTH}/refresh`,
     me: `${AUTH}/me`,
+    forgotPassword: `${AUTH}/forgot-password`,
+    resetPassword: `${AUTH}/reset-password`,
+    register: '/auth/user/registrar',
+    verifyEmail: '/auth/user/verificar',
+  },
+  turnos: {
+    programacionEmpleado: '/tur/programacion/empleado',
   },
 } as const;

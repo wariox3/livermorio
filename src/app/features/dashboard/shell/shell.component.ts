@@ -26,6 +26,7 @@ export class ShellComponent {
   readonly navItems: NavItem[] = [
     { label: 'Inicio', icon: 'pi pi-home', route: ROUTE_PATHS.dashboard.inicio },
     { label: 'Pagos', icon: 'pi pi-credit-card', route: ROUTE_PATHS.dashboard.pagos },
+    { label: 'Turnos', icon: 'pi pi-calendar', route: ROUTE_PATHS.dashboard.turnos },
     {
       label: 'Reclamos',
       icon: 'pi pi-exclamation-triangle',
@@ -57,7 +58,6 @@ export class ShellComponent {
       icon: 'pi pi-heart',
       route: ROUTE_PATHS.dashboard.seguridadSocial,
     },
-    { label: 'Turnos', icon: 'pi pi-calendar', route: ROUTE_PATHS.dashboard.turnos },
   ];
 
   toggleDrawer(): void {

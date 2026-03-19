@@ -1,18 +1,19 @@
 import { HttpInterceptorFn, HttpStatusCode } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../../features/auth/services/auth.service';
 import { ToastService } from '../services/toast.service';
+import { TokenRefreshService } from '../services/token-refresh.service';
 import { API_ENDPOINTS } from '../constants/api-endpoints.constants';
-
-let isRefreshing = false;
-const refreshSubject$ = new BehaviorSubject<boolean | null>(null);
 
 const AUTH_SKIP_URLS = [
   API_ENDPOINTS.auth.login,
   API_ENDPOINTS.auth.refresh,
   API_ENDPOINTS.auth.logout,
   API_ENDPOINTS.auth.me,
+  API_ENDPOINTS.auth.forgotPassword,
+  API_ENDPOINTS.auth.resetPassword,
+  API_ENDPOINTS.auth.register,
 ];
 
 function isAuthUrl(url: string): boolean {
@@ -22,6 +23,7 @@ function isAuthUrl(url: string): boolean {
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const toast = inject(ToastService);
+  const tokenRefresh = inject(TokenRefreshService);
 
   return next(req).pipe(
     catchError((error) => {
@@ -35,28 +37,23 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           return throwError(() => error);
         }
 
-        if (!isRefreshing) {
-          isRefreshing = true;
-          refreshSubject$.next(null);
+        if (!tokenRefresh.refreshing) {
+          tokenRefresh.startRefresh();
 
           return authService.refresh().pipe(
             switchMap(() => {
-              isRefreshing = false;
-              refreshSubject$.next(true);
+              tokenRefresh.completeRefresh();
               return next(req);
             }),
             catchError((refreshError) => {
-              isRefreshing = false;
-              refreshSubject$.next(false);
+              tokenRefresh.failRefresh();
               authService.clearSession();
               return throwError(() => refreshError);
             }),
           );
         }
 
-        return refreshSubject$.pipe(
-          filter((result) => result !== null),
-          take(1),
+        return tokenRefresh.waitForRefresh().pipe(
           switchMap((success) => {
             if (success) {
               return next(req);

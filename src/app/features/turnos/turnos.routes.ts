@@ -4,6 +4,6 @@ export const TURNOS_ROUTES: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./components/turnos-list/turnos-list.component').then((m) => m.TurnosListComponent),
+      import('./pages/turnos-list/turnos-list.component').then((m) => m.TurnosListComponent),
   },
 ];
