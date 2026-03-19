@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { API_ENDPOINTS } from '../../../core/constants/api-endpoints.constants';
+import { API_ENDPOINTS, buildHttpParams } from '../../../core';
 import { ProgramacionEmpleado } from '../models/turno.model';
 
 @Injectable({ providedIn: 'root' })
@@ -16,10 +16,7 @@ export class TurnosService {
     anio: number,
     mes: number,
   ): Observable<ProgramacionEmpleado[]> {
-    const params = new HttpParams()
-      .set('empleado_id', empleadoId)
-      .set('anio', anio)
-      .set('mes', mes);
+    const params = buildHttpParams({ empleado_id: empleadoId, anio, mes });
 
     return this.http.get<ProgramacionEmpleado[]>(
       `${this.baseUrl}${API_ENDPOINTS.turnos.programacionEmpleado}`,
