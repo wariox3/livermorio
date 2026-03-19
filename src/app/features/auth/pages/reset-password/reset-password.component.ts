@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, viewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -13,6 +13,7 @@ import { MessageModule } from 'primeng/message';
 import { AuthService } from '../../services/auth.service';
 import { ROUTE_PATHS } from '../../../../core/constants/route-paths.constants';
 import { extractErrorMessage } from '../../../../core/utils/error.utils';
+import { TurnstileComponent } from '../../../../shared';
 
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
@@ -25,7 +26,14 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, ButtonModule, PasswordModule, MessageModule],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    ButtonModule,
+    PasswordModule,
+    MessageModule,
+    TurnstileComponent,
+  ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss',
 })
@@ -35,9 +43,12 @@ export class ResetPasswordComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
+  private readonly turnstile = viewChild(TurnstileComponent);
+
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly submitted = signal(false);
+  readonly captchaToken = signal<string | null>(null);
 
   private token = '';
 
@@ -69,8 +80,9 @@ export class ResetPasswordComponent implements OnInit {
 
     const { password } = this.form.getRawValue();
 
-    this.authService.resetPassword(this.token, password!).subscribe({
+    this.authService.resetPassword(this.token, password!, this.captchaToken()!).subscribe({
       next: () => {
+        this.turnstile()?.reset();
         this.submitted.set(true);
         this.isLoading.set(false);
         setTimeout(() => {
@@ -78,6 +90,8 @@ export class ResetPasswordComponent implements OnInit {
         }, 2000);
       },
       error: (err) => {
+        this.turnstile()?.reset();
+        this.captchaToken.set(null);
         this.errorMessage.set(
           extractErrorMessage(
             err,
