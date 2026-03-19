@@ -46,13 +46,7 @@
             <td>{{ contrato.fecha_hasta | date: 'dd/MM/yyyy' }}</td>
             <td>{{ contrato.vr_salario | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
             <td>
-              <p-button
-                icon="pi pi-download"
-                severity="secondary"
-                [text]="true"
-                [rounded]="true"
-                size="small"
-              />
+              <p-button icon="pi pi-print" severity="secondary" [text]="true" [rounded]="true" />
             </td>
           </tr>
         </ng-template>
