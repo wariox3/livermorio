@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import {
   PageHeaderComponent,
@@ -10,8 +9,9 @@ import {
 import { PagosService } from '../../services/pagos.service';
 import { Pago } from '../../models/pago.model';
 import { extractErrorMessage } from '../../../../core/utils/error.utils';
-import { TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-pagos-list',
@@ -22,7 +22,7 @@ import { TagModule } from 'primeng/tag';
     EmptyStateComponent,
     ErrorAlertComponent,
     TableModule,
-    TagModule,
+    ButtonModule,
     DatePipe,
     CurrencyPipe,
   ],
@@ -31,37 +31,50 @@ import { TagModule } from 'primeng/tag';
 })
 export class PagosListComponent implements OnInit {
   private readonly pagosService = inject(PagosService);
+  private readonly authService = inject(AuthService);
 
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
   readonly pagos = signal<Pago[]>([]);
+  readonly totalRecords = signal(0);
+  readonly pageSize = signal(50);
+  readonly first = signal(0);
 
   ngOnInit(): void {
-    this.loadPagos();
+    this.loadPagos(1);
   }
 
-  loadPagos(): void {
+  loadPagos(page: number): void {
+    const user = this.authService.currentUser();
+
+    if (!user) {
+      this.loading.set(false);
+      return;
+    }
+
     this.loading.set(true);
     this.error.set(null);
 
-    this.pagosService.getAll().subscribe({
-      next: (response) => {
-        this.pagos.set(response.data);
-        this.loading.set(false);
-      },
-      error: (err) => {
-        this.error.set(extractErrorMessage(err, 'No se pudieron cargar los pagos.'));
-        this.loading.set(false);
-      },
-    });
+    this.pagosService
+      .getPagos({ page, size: this.pageSize(), empleado_id: user.empleado_id })
+      .subscribe({
+        next: (res) => {
+          this.pagos.set(res.items);
+          this.totalRecords.set(res.total);
+          this.loading.set(false);
+        },
+        error: (err) => {
+          this.error.set(extractErrorMessage(err, 'No se pudieron cargar los pagos.'));
+          this.loading.set(false);
+        },
+      });
   }
 
-  estadoSeverity(estado: Pago['estado']): 'success' | 'warn' | 'danger' {
-    const map: Record<Pago['estado'], 'success' | 'warn' | 'danger'> = {
-      pagado: 'success',
-      pendiente: 'warn',
-      rechazado: 'danger',
-    };
-    return map[estado];
+  onLazyLoad(event: TableLazyLoadEvent): void {
+    const first = event.first ?? 0;
+    const rows = event.rows ?? this.pageSize();
+    this.first.set(first);
+    this.pageSize.set(rows);
+    this.loadPagos(Math.floor(first / rows) + 1);
   }
 }

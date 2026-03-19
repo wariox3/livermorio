@@ -14,4 +14,7 @@ export const API_ENDPOINTS = {
   turnos: {
     programacionEmpleado: '/tur/programacion/empleado',
   },
+  pagos: {
+    lista: '/rhu/pago/lista',
+  },
 } as const;
