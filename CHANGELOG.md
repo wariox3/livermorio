@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.2](https://github.com/tamerlantian/livermorio/compare/v0.0.1...v0.0.2) (2026-03-19)
+
+### Features
+
+- **auth:** add email verification page ([55b298c](https://github.com/tamerlantian/livermorio/commit/55b298c3750877fec0f26e51e4043d0d4b4cc22a))
+- **auth:** add forgot-password and reset-password flow ([7818b41](https://github.com/tamerlantian/livermorio/commit/7818b415e5810164350521eb2dd42383f08bd113))
+- **auth:** add user registration flow ([8839818](https://github.com/tamerlantian/livermorio/commit/8839818a3563529435ead16cbad4e730bf9ccf05))
+- **auth:** update register form to match backend API ([1091b6d](https://github.com/tamerlantian/livermorio/commit/1091b6d1b08c3c54c75c0b3912aca5b1dd8c8074))
+- **programacion-table:** merge cliente and puesto into full-width colspan row ([bdd43c5](https://github.com/tamerlantian/livermorio/commit/bdd43c5c5a6da421c8faa01a4aebac06e68f90db))
+- **turnos:** expand turno color palette to 18 colors ([204f3b2](https://github.com/tamerlantian/livermorio/commit/204f3b22c7e7e353fcd456331ed19a31b84a2461))
+
+### Bug Fixes
+
+- **auth:** update register success to mention email verification ([b274ff0](https://github.com/tamerlantian/livermorio/commit/b274ff0330fcbcc3ada61862792278e0407b540a))
+- **core:** extract backend error detail from API responses ([935f9fa](https://github.com/tamerlantian/livermorio/commit/935f9fa7e81d16a76ee0f79961368308cc94f06d))
+- **turnos:** allow detail values to wrap on mobile instead of truncating ([0975013](https://github.com/tamerlantian/livermorio/commit/0975013c206a183819685f3a084b4446bf60999e))
+
+### Refactoring
+
+- **auth:** move auth components into pages/ subdirectory ([09407dd](https://github.com/tamerlantian/livermorio/commit/09407dddc4440ff7869a6928a12b501051c54644))
+- **interceptor:** extract token refresh logic into TokenRefreshService ([c978cbf](https://github.com/tamerlantian/livermorio/commit/c978cbfe388537ccf38c3d1cf69221609aaa5403))
+- **pagos:** move pagos-list into pages/ subdirectory ([500a5ee](https://github.com/tamerlantian/livermorio/commit/500a5ee06047b03eb56efc70753cf8294307f206))
+- **turnos:** extract mock data to separate file and restore HTTP endpoint ([1823102](https://github.com/tamerlantian/livermorio/commit/1823102babb04e6b6336d97eda8b4ab4a524c6cf))
+- **turnos:** extract turno-card and programacion-table components ([5c56422](https://github.com/tamerlantian/livermorio/commit/5c56422d29ecbed65d86955abc7599f941cdab0c))
+- **turnos:** move shift code to header as hero badge ([d07e9d7](https://github.com/tamerlantian/livermorio/commit/d07e9d7e8b170cf6f7600337f8bb46b599e3f295))
+- **turnos:** redesign calendar cells with color by puesto and cell tooltip ([7ad44f5](https://github.com/tamerlantian/livermorio/commit/7ad44f595e8e46c03f5ce9a479da48c3e6f2c599))
+
 ## [0.0.1](https://github.com/tamerlantian/livermorio/compare/v0.0.0...v0.0.1) (2026-03-12)
 
 ### Bug Fixes
