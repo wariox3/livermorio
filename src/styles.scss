@@ -59,6 +59,11 @@ body {
   width: 100%;
   min-height: 100%;
   padding: 2rem;
+  overflow-x: hidden;
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 }
 
 .w-full {
