@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.4](https://github.com/tamerlantian/livermorio/compare/v0.0.3...v0.0.4) (2026-03-19)
+
+### Features
+
+- **auth:** integrate Turnstile CAPTCHA in reset password form ([6e10c89](https://github.com/tamerlantian/livermorio/commit/6e10c8996f648e2c1e9eeed6f05d55a8866601a3))
+
 ## [0.0.3](https://github.com/tamerlantian/livermorio/compare/v0.0.2...v0.0.3) (2026-03-19)
 
 ### Features

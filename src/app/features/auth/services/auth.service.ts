@@ -100,10 +100,11 @@ export class AuthService {
   /**
    * Establece una nueva contraseña usando el token de recuperación.
    */
-  resetPassword(token: string, password: string): Observable<void> {
+  resetPassword(token: string, password: string, captchaToken?: string): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.resetPassword}`, {
       token,
       nueva_clave: password,
+      ...(captchaToken && { turnstile_token: captchaToken }),
     });
   }
 
