@@ -16,11 +16,17 @@ const TURNSTILE_SCRIPT_URL = 'https://challenges.cloudflare.com/turnstile/v0/api
   selector: 'app-turnstile',
   standalone: true,
   template: `<div #turnstileContainer></div>`,
+  styles: `
+    :host {
+      display: block;
+      width: 100%;
+    }
+  `,
 })
 export class TurnstileComponent implements OnDestroy {
   readonly siteKey = input(environment.turnstileSiteKey);
   readonly theme = input<'light' | 'dark' | 'auto'>('auto');
-  readonly size = input<'normal' | 'compact'>('normal');
+  readonly size = input<'normal' | 'flexible' | 'compact'>('flexible');
 
   readonly verified = output<string>();
   readonly expired = output<void>();
@@ -54,7 +60,9 @@ export class TurnstileComponent implements OnDestroy {
   private renderWidget(): void {
     if (!window.turnstile) return;
 
-    this.widgetId = window.turnstile.render(this.container().nativeElement, {
+    const container = this.container().nativeElement;
+
+    this.widgetId = window.turnstile.render(container, {
       sitekey: this.siteKey(),
       theme: this.theme(),
       size: this.size(),
