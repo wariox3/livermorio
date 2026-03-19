@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 
 /** Tipo de valores aceptados para parámetros HTTP */
-type ParamValue = string | number | boolean | null | undefined;
+export type ParamValue = string | number | boolean | null | undefined;
 
 /**
  * Construye un objeto HttpParams a partir de un record plano.

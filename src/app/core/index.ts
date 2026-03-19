@@ -5,7 +5,6 @@ export { errorInterceptor } from './interceptors/error.interceptor';
 export { ToastService } from './services/toast.service';
 export { TokenRefreshService } from './services/token-refresh.service';
 export { BaseHttpService } from './services/base-http.service';
-export type { QueryParams } from './services/base-http.service';
 export type { PaginatedResponse } from './models/pagination.model';
 export { API_ENDPOINTS } from './constants/api-endpoints.constants';
 export { ROUTE_PATHS } from './constants/route-paths.constants';
