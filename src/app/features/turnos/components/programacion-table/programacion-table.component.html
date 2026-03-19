@@ -16,7 +16,7 @@
     styleClass="programacion-table"
   >
     <ng-template #header>
-      <tr>
+      <tr class="dias-header-row">
         @for (dia of diasDelMes(); track dia) {
           <th style="min-width: 48px; text-align: center" [class.dia-actual]="dia === diaActual()">
             {{ dia }}
