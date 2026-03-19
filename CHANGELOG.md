@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.3](https://github.com/tamerlantian/livermorio/compare/v0.0.2...v0.0.3) (2026-03-19)
+
+### Features
+
+- **auth:** integrate Turnstile CAPTCHA in login, register and forgot password forms ([9e62a5d](https://github.com/tamerlantian/livermorio/commit/9e62a5da4064aebd55c2b150f921385f2854b642))
+- **certificado-laboral:** implement certificado laboral list with real API and lazy pagination ([ceaf8f6](https://github.com/tamerlantian/livermorio/commit/ceaf8f6b91a13bf4f05893535287b5ec60b8145e))
+- **env:** add Turnstile site keys for production and staging ([202afad](https://github.com/tamerlantian/livermorio/commit/202afad9a9555e3aedf34eae0317dfd70f822646))
+- **pagos:** add print pago functionality with PDF download ([691a8cd](https://github.com/tamerlantian/livermorio/commit/691a8cd159eebcb698afb00400ecbe89a03767ed))
+- **pagos:** implement pagos list with real API and lazy pagination ([0d4c5c7](https://github.com/tamerlantian/livermorio/commit/0d4c5c7dfbef72cde9a5fcc17a550545f79e81d9))
+- **shared:** add Cloudflare Turnstile CAPTCHA component and environment config ([97a022d](https://github.com/tamerlantian/livermorio/commit/97a022df475c93aaf9622355152c702cc4fd328d))
+- **shell:** add tenant association flow with guard and empresa dialog ([6879f5a](https://github.com/tamerlantian/livermorio/commit/6879f5aabeb62579f68d35ee0cd3624c83b09702))
+
+### Bug Fixes
+
+- **auth:** align forgot/reset-password endpoints and routes with real API ([cf743c8](https://github.com/tamerlantian/livermorio/commit/cf743c87d4e06a7128355858bb7fd8809f81920b))
+- **pagos, certificado-laboral:** adjust action button styles ([447a82e](https://github.com/tamerlantian/livermorio/commit/447a82ea67c3e6454a0934bc5e3c065e7a4e1b83))
+- **turnos:** add missing subtitle to page header for consistency ([852e23c](https://github.com/tamerlantian/livermorio/commit/852e23c78dd09165303ef8048d6ed2a8c599750e))
+- **turnstile:** use flexible size for responsive width instead of DOM hacks ([e620e02](https://github.com/tamerlantian/livermorio/commit/e620e0251bb9afa7b82dadee3b87f0fb750007a3))
+
+### Refactoring
+
+- **auth:** rename captcha_token to turnstile_token in requests ([bc14e0d](https://github.com/tamerlantian/livermorio/commit/bc14e0daed6522ded527b8068d932fa0b0f806f2))
+- co-locate feature endpoints in their respective services ([18961d2](https://github.com/tamerlantian/livermorio/commit/18961d24f77966a5637344fcd1ecc86d6affb897))
+- **core:** extract pagination model and buildHttpParams utility ([d06db8f](https://github.com/tamerlantian/livermorio/commit/d06db8f593548f5f2d8a39dce9c6eecf8887fe7f))
+- **core:** simplify BaseHttpService to generic HTTP utility methods ([e5a29c6](https://github.com/tamerlantian/livermorio/commit/e5a29c6ca04d825bd0f4c5c0af0da38ff005f980))
+- **turnos:** use shared buildHttpParams utility ([4b918a6](https://github.com/tamerlantian/livermorio/commit/4b918a6cae4e30920b2ce256b261ff395183bc0f))
+
 ## [0.0.2](https://github.com/tamerlantian/livermorio/compare/v0.0.1...v0.0.2) (2026-03-19)
 
 ### Features
