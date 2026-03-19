@@ -54,7 +54,14 @@
             <td>{{ pago.vr_deduccion | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
             <td>{{ pago.vr_neto | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
             <td>
-              <p-button icon="pi pi-print" severity="secondary" [text]="true" [rounded]="true" />
+              <p-button
+                icon="pi pi-print"
+                severity="secondary"
+                [text]="true"
+                [rounded]="true"
+                [loading]="printing() === pago.codigo_pago_pk"
+                (click)="imprimirPago(pago)"
+              />
             </td>
           </tr>
         </ng-template>

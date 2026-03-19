@@ -9,6 +9,7 @@ import {
 import { PagosService } from '../../services/pagos.service';
 import { Pago } from '../../models/pago.model';
 import { extractErrorMessage } from '../../../../core/utils/error.utils';
+import { ToastService } from '../../../../core';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -32,6 +33,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 export class PagosListComponent implements OnInit {
   private readonly pagosService = inject(PagosService);
   private readonly authService = inject(AuthService);
+  private readonly toastService = inject(ToastService);
 
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
@@ -39,6 +41,7 @@ export class PagosListComponent implements OnInit {
   readonly totalRecords = signal(0);
   readonly pageSize = signal(50);
   readonly first = signal(0);
+  readonly printing = signal<number | null>(null);
 
   ngOnInit(): void {
     this.loadPagos(1);
@@ -76,5 +79,22 @@ export class PagosListComponent implements OnInit {
     this.first.set(first);
     this.pageSize.set(rows);
     this.loadPagos(Math.floor(first / rows) + 1);
+  }
+
+  imprimirPago(pago: Pago): void {
+    this.printing.set(pago.codigo_pago_pk);
+
+    this.pagosService.imprimirPago(pago.codigo_pago_pk).subscribe({
+      next: (blob) => {
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        URL.revokeObjectURL(url);
+        this.printing.set(null);
+      },
+      error: (err) => {
+        this.toastService.error(extractErrorMessage(err, 'No se pudo imprimir el pago.'));
+        this.printing.set(null);
+      },
+    });
   }
 }

@@ -14,4 +14,10 @@ export class PagosService extends BaseHttpService {
       empleado_id: params?.empleado_id,
     });
   }
+
+  imprimirPago(pagoId: number): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/rhu/pago/${pagoId}/imprimir`, {
+      responseType: 'blob',
+    });
+  }
 }
