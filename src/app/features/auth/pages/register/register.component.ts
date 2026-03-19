@@ -79,7 +79,7 @@ export class RegisterComponent {
         numero_identificacion: numero_identificacion!,
         email: email!,
         password: password!,
-        captcha_token: this.captchaToken()!,
+        turnstile_token: this.captchaToken()!,
       })
       .subscribe({
         next: () => {

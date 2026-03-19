@@ -93,7 +93,7 @@ export class AuthService {
   forgotPassword(email: string, captchaToken?: string): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.forgotPassword}`, {
       email,
-      ...(captchaToken && { captcha_token: captchaToken }),
+      ...(captchaToken && { turnstile_token: captchaToken }),
     });
   }
 

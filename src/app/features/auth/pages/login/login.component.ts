@@ -57,7 +57,7 @@ export class LoginComponent {
         email: email!,
         password: password!,
         client_type: 'web',
-        captcha_token: this.captchaToken()!,
+        turnstile_token: this.captchaToken()!,
       })
       .subscribe({
         next: () => {

@@ -2,7 +2,7 @@ export interface LoginRequest {
   email: string;
   password: string;
   client_type: 'api' | 'web';
-  captcha_token?: string;
+  turnstile_token?: string;
 }
 
 /** Respuesta del backend; las cookies HTTP-only se setean automáticamente */
@@ -29,7 +29,7 @@ export interface RegisterRequest {
   nombres: string;
   apellidos: string;
   numero_identificacion: string;
-  captcha_token?: string;
+  turnstile_token?: string;
 }
 
 export interface RegisteredUser {
