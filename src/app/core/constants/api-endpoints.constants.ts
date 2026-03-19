@@ -11,10 +11,4 @@ export const API_ENDPOINTS = {
     register: '/auth/user/registrar',
     verifyEmail: '/auth/user/verificar',
   },
-  turnos: {
-    programacionEmpleado: '/tur/programacion/empleado',
-  },
-  pagos: {
-    lista: '/rhu/pago/lista',
-  },
 } as const;

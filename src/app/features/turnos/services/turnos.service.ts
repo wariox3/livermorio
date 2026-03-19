@@ -1,14 +1,11 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { API_ENDPOINTS, buildHttpParams } from '../../../core';
+import { BaseHttpService } from '../../../core';
 import { ProgramacionEmpleado } from '../models/turno.model';
 
 @Injectable({ providedIn: 'root' })
-export class TurnosService {
-  private readonly http = inject(HttpClient);
-  private readonly baseUrl = environment.apiUrl;
+export class TurnosService extends BaseHttpService {
+  private readonly TURNOS_URL = '/tur/programacion/empleado';
 
   /** Consulta la programación mensual de turnos para un empleado en un año y mes específicos. */
   getProgramacionEmpleado(
@@ -16,11 +13,10 @@ export class TurnosService {
     anio: number,
     mes: number,
   ): Observable<ProgramacionEmpleado[]> {
-    const params = buildHttpParams({ empleado_id: empleadoId, anio, mes });
-
-    return this.http.get<ProgramacionEmpleado[]>(
-      `${this.baseUrl}${API_ENDPOINTS.turnos.programacionEmpleado}`,
-      { params },
-    );
+    return this.get<ProgramacionEmpleado[]>(this.TURNOS_URL, {
+      empleado_id: empleadoId,
+      anio,
+      mes,
+    });
   }
 }
