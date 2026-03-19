@@ -17,8 +17,6 @@
   >
     <ng-template #header>
       <tr>
-        <th style="min-width: 180px" class="frozen-col">Cliente</th>
-        <th style="min-width: 200px" class="frozen-col">Puesto</th>
         @for (dia of diasDelMes(); track dia) {
           <th style="min-width: 48px; text-align: center" [class.dia-actual]="dia === diaActual()">
             {{ dia }}
@@ -28,8 +26,11 @@
     </ng-template>
     <ng-template #body let-prog>
       <tr>
-        <td style="min-width: 180px" class="frozen-col">{{ prog.tercero_nombre_corto }}</td>
-        <td style="min-width: 200px" class="frozen-col">{{ prog.puesto_nombre }}</td>
+        <td [attr.colspan]="totalColumnas()" style="font-weight: 600">
+          {{ prog.tercero_nombre_corto }} — {{ prog.puesto_nombre }}
+        </td>
+      </tr>
+      <tr>
         @for (dia of diasDelMes(); track dia) {
           <td style="min-width: 48px; text-align: center" [class.dia-actual]="dia === diaActual()">
             {{ prog['dia_' + dia] || '-' }}
