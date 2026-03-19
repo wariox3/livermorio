@@ -1,7 +1,8 @@
 import { inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { buildHttpParams } from '../utils/http-params.utils';
 
 export interface PaginatedResponse<T> {
   data: T[];
@@ -73,15 +74,7 @@ export abstract class BaseHttpService<T, TCreate = Partial<T>, TUpdate = Partial
   }
 
   /** Construye HttpParams filtrando valores undefined */
-  protected buildParams(params?: QueryParams): HttpParams {
-    let httpParams = new HttpParams();
-    if (!params) return httpParams;
-
-    for (const [key, value] of Object.entries(params)) {
-      if (value !== undefined && value !== null) {
-        httpParams = httpParams.set(key, String(value));
-      }
-    }
-    return httpParams;
+  protected buildParams(params?: QueryParams): ReturnType<typeof buildHttpParams> {
+    return buildHttpParams(params ?? {});
   }
 }
