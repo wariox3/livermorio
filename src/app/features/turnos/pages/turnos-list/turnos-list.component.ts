@@ -45,7 +45,7 @@ export class TurnosListComponent implements OnInit {
       return;
     }
 
-    obtenerTurnosHoyManana(this.turnosService, user.empleado_id).subscribe({
+    obtenerTurnosHoyManana(this.turnosService, user.empleado_id!).subscribe({
       next: ({ turnoHoy, turnoManana, programaciones }) => {
         this.turnoHoy.set(turnoHoy);
         this.turnoManana.set(turnoManana);

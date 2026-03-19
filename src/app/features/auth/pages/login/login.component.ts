@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -7,6 +7,7 @@ import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../../services/auth.service';
 import { extractErrorMessage } from '../../../../core/utils/error.utils';
+import { TurnstileComponent } from '../../../../shared';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ import { extractErrorMessage } from '../../../../core/utils/error.utils';
     InputTextModule,
     PasswordModule,
     MessageModule,
+    TurnstileComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -28,8 +30,11 @@ export class LoginComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
+  private readonly turnstile = viewChild(TurnstileComponent);
+
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
+  readonly captchaToken = signal<string | null>(null);
 
   readonly form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -47,18 +52,28 @@ export class LoginComponent {
 
     const { email, password } = this.form.getRawValue();
 
-    this.authService.login({ email: email!, password: password!, client_type: 'web' }).subscribe({
-      next: () => {
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-        const safeUrl =
-          returnUrl?.startsWith('/') && !returnUrl.startsWith('//') ? returnUrl : '/dashboard';
-        this.router.navigateByUrl(safeUrl);
-      },
-      error: (err) => {
-        this.errorMessage.set(extractErrorMessage(err, 'Credenciales inválidas.'));
-        this.isLoading.set(false);
-      },
-    });
+    this.authService
+      .login({
+        email: email!,
+        password: password!,
+        client_type: 'web',
+        turnstile_token: this.captchaToken()!,
+      })
+      .subscribe({
+        next: () => {
+          this.turnstile()?.reset();
+          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+          const safeUrl =
+            returnUrl?.startsWith('/') && !returnUrl.startsWith('//') ? returnUrl : '/dashboard';
+          this.router.navigateByUrl(safeUrl);
+        },
+        error: (err) => {
+          this.turnstile()?.reset();
+          this.captchaToken.set(null);
+          this.errorMessage.set(extractErrorMessage(err, 'Credenciales inválidas.'));
+          this.isLoading.set(false);
+        },
+      });
   }
 
   get emailControl() {

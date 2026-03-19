@@ -1,8 +1,9 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, catchError, of, tap } from 'rxjs';
+import { Observable, catchError, of, switchMap, tap } from 'rxjs';
 import {
+  AsociarEmpresaRequest,
   AuthResponse,
   LoginRequest,
   RegisterRequest,
@@ -23,6 +24,7 @@ export class AuthService {
   private readonly _currentUser = signal<Usuario | null>(null);
   readonly currentUser = this._currentUser.asReadonly();
   readonly isAuthenticated = computed(() => !!this._currentUser());
+  readonly hasTenant = computed(() => !!this._currentUser()?.empleado_id);
 
   /**
    * Realiza el login del usuario.
@@ -74,11 +76,24 @@ export class AuthService {
   }
 
   /**
+   * Asocia al usuario autenticado con una empresa (tenant).
+   * Tras la asociación, refresca el usuario para obtener el empleado_id.
+   */
+  asociarEmpresa(tenantId: number): Observable<Usuario | null> {
+    const userId = this._currentUser()?.id;
+    const body: AsociarEmpresaRequest = { usuario_id: userId!, tenant_id: tenantId };
+    return this.http
+      .post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.asociarEmpresa}`, body)
+      .pipe(switchMap(() => this.me()));
+  }
+
+  /**
    * Envía un correo de recuperación de contraseña al email indicado.
    */
-  forgotPassword(email: string): Observable<void> {
+  forgotPassword(email: string, captchaToken?: string): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.forgotPassword}`, {
       email,
+      ...(captchaToken && { turnstile_token: captchaToken }),
     });
   }
 
@@ -88,7 +103,7 @@ export class AuthService {
   resetPassword(token: string, password: string): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.resetPassword}`, {
       token,
-      password,
+      nueva_clave: password,
     });
   }
 

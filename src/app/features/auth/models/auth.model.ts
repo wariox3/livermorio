@@ -2,6 +2,7 @@ export interface LoginRequest {
   email: string;
   password: string;
   client_type: 'api' | 'web';
+  turnstile_token?: string;
 }
 
 /** Respuesta del backend; las cookies HTTP-only se setean automáticamente */
@@ -14,7 +15,12 @@ export interface Usuario {
   name: string;
   email: string;
   role: string;
-  empleado_id: number;
+  empleado_id: number | null;
+}
+
+export interface AsociarEmpresaRequest {
+  usuario_id: number;
+  tenant_id: number;
 }
 
 export interface RegisterRequest {
@@ -23,6 +29,7 @@ export interface RegisterRequest {
   nombres: string;
   apellidos: string;
   numero_identificacion: string;
+  turnstile_token?: string;
 }
 
 export interface RegisteredUser {
