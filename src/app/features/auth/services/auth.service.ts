@@ -88,7 +88,7 @@ export class AuthService {
   resetPassword(token: string, password: string): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.resetPassword}`, {
       token,
-      password,
+      nueva_clave: password,
     });
   }
 
