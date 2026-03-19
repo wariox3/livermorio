@@ -90,9 +90,10 @@ export class AuthService {
   /**
    * Envía un correo de recuperación de contraseña al email indicado.
    */
-  forgotPassword(email: string): Observable<void> {
+  forgotPassword(email: string, captchaToken?: string): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.forgotPassword}`, {
       email,
+      ...(captchaToken && { captcha_token: captchaToken }),
     });
   }
 

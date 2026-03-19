@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -13,6 +13,7 @@ import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../../services/auth.service';
 import { extractErrorMessage } from '../../../../core/utils/error.utils';
+import { TurnstileComponent } from '../../../../shared';
 
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
@@ -32,6 +33,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
     InputTextModule,
     PasswordModule,
     MessageModule,
+    TurnstileComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -40,10 +42,12 @@ export class RegisterComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly turnstile = viewChild(TurnstileComponent);
 
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly submitted = signal(false);
+  readonly captchaToken = signal<string | null>(null);
 
   readonly form = this.fb.group(
     {
@@ -75,13 +79,17 @@ export class RegisterComponent {
         numero_identificacion: numero_identificacion!,
         email: email!,
         password: password!,
+        captcha_token: this.captchaToken()!,
       })
       .subscribe({
         next: () => {
+          this.turnstile()?.reset();
           this.submitted.set(true);
           this.isLoading.set(false);
         },
         error: (err) => {
+          this.turnstile()?.reset();
+          this.captchaToken.set(null);
           this.errorMessage.set(
             extractErrorMessage(err, 'No se pudo completar el registro. Inténtalo de nuevo.'),
           );
