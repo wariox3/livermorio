@@ -1,5 +1,6 @@
 export { authGuard } from './guards/auth.guard';
 export { publicGuard } from './guards/public.guard';
+export { tenantGuard } from './guards/tenant.guard';
 export { authInterceptor } from './interceptors/auth.interceptor';
 export { errorInterceptor } from './interceptors/error.interceptor';
 export { ToastService } from './services/toast.service';

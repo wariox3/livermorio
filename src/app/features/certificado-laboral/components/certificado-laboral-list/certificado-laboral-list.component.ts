@@ -56,7 +56,7 @@ export class CertificadoLaboralListComponent implements OnInit {
     this.error.set(null);
 
     this.certificadoLaboralService
-      .getContratos({ page, size: this.pageSize(), empleado_id: user.empleado_id })
+      .getContratos({ page, size: this.pageSize(), empleado_id: user.empleado_id! })
       .subscribe({
         next: (res) => {
           this.contratos.set(res.items);

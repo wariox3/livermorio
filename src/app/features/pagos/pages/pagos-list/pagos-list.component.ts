@@ -56,7 +56,7 @@ export class PagosListComponent implements OnInit {
     this.error.set(null);
 
     this.pagosService
-      .getPagos({ page, size: this.pageSize(), empleado_id: user.empleado_id })
+      .getPagos({ page, size: this.pageSize(), empleado_id: user.empleado_id! })
       .subscribe({
         next: (res) => {
           this.pagos.set(res.items);

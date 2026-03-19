@@ -14,7 +14,12 @@ export interface Usuario {
   name: string;
   email: string;
   role: string;
-  empleado_id: number;
+  empleado_id: number | null;
+}
+
+export interface AsociarEmpresaRequest {
+  usuario_id: number;
+  tenant_id: number;
 }
 
 export interface RegisterRequest {
