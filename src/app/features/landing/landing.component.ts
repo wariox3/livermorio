@@ -1,6 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { InputText } from 'primeng/inputtext';
+import { Textarea } from 'primeng/textarea';
 
 interface FaqItem {
   question: string;
@@ -10,23 +14,24 @@ interface FaqItem {
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, InputText, Textarea, ButtonModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
 export class LandingComponent {
   private readonly fb = inject(FormBuilder);
+  private readonly http = inject(HttpClient);
 
   readonly currentYear = new Date().getFullYear();
   readonly contactSending = signal(false);
   readonly contactSent = signal(false);
 
   readonly contactForm = this.fb.nonNullable.group({
-    nombre: ['', Validators.required],
+    nombre: ['', Validators.maxLength(200)],
     correo: ['', [Validators.required, Validators.email]],
-    telefono: ['', Validators.required],
-    empresa: ['', Validators.required],
-    descripcion: ['', Validators.required],
+    telefono: ['', [Validators.required, Validators.maxLength(50)]],
+    empresa: [''],
+    descripcion: [''],
   });
 
   readonly faqItems: FaqItem[] = [
@@ -64,6 +69,14 @@ export class LandingComponent {
 
   readonly openIndex = signal<number | null>(null);
 
+  get correoControl() {
+    return this.contactForm.controls.correo;
+  }
+
+  get telefonoControl() {
+    return this.contactForm.controls.telefono;
+  }
+
   toggle(index: number): void {
     this.openIndex.update((current) => (current === index ? null : index));
   }
@@ -76,15 +89,20 @@ export class LandingComponent {
 
     this.contactSending.set(true);
 
-    // TODO: Implementar endpoint de contacto
-    // this.http.post('/api/contacto', this.contactForm.getRawValue()).subscribe(...)
-    console.log('Datos de contacto:', this.contactForm.getRawValue());
+    const payload = {
+      ...this.contactForm.getRawValue(),
+      codigoProyecto: 11,
+    };
 
-    // Simulación temporal
-    setTimeout(() => {
-      this.contactSending.set(false);
-      this.contactSent.set(true);
-      this.contactForm.reset();
-    }, 1000);
+    this.http.post('https://semantica.com.co/api/contacto/nuevo', payload).subscribe({
+      next: () => {
+        this.contactSending.set(false);
+        this.contactSent.set(true);
+        this.contactForm.reset();
+      },
+      error: () => {
+        this.contactSending.set(false);
+      },
+    });
   }
 }
