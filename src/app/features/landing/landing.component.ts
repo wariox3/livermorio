@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 interface FaqItem {
@@ -9,12 +10,24 @@ interface FaqItem {
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
 export class LandingComponent {
+  private readonly fb = inject(FormBuilder);
+
   readonly currentYear = new Date().getFullYear();
+  readonly contactSending = signal(false);
+  readonly contactSent = signal(false);
+
+  readonly contactForm = this.fb.nonNullable.group({
+    nombre: ['', Validators.required],
+    correo: ['', [Validators.required, Validators.email]],
+    telefono: ['', Validators.required],
+    empresa: ['', Validators.required],
+    descripcion: ['', Validators.required],
+  });
 
   readonly faqItems: FaqItem[] = [
     {
@@ -53,5 +66,25 @@ export class LandingComponent {
 
   toggle(index: number): void {
     this.openIndex.update((current) => (current === index ? null : index));
+  }
+
+  submitContact(): void {
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
+
+    this.contactSending.set(true);
+
+    // TODO: Implementar endpoint de contacto
+    // this.http.post('/api/contacto', this.contactForm.getRawValue()).subscribe(...)
+    console.log('Datos de contacto:', this.contactForm.getRawValue());
+
+    // Simulación temporal
+    setTimeout(() => {
+      this.contactSending.set(false);
+      this.contactSent.set(true);
+      this.contactForm.reset();
+    }, 1000);
   }
 }

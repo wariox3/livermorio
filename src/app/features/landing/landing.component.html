@@ -7,7 +7,7 @@
       </div>
 
       <div class="nav__links">
-        <a href="mailto:contacto@semantica.com.co" class="nav__link">Contáctenos</a>
+        <a href="#contacto" class="nav__link">Contáctenos</a>
         <a href="#acerca" class="nav__link">Acerca de</a>
       </div>
     </div>
@@ -22,7 +22,13 @@
     </div>
 
     <div class="main__content">
-      <div class="main__eyebrow">Semantica ERP</div>
+      <div class="main__hero-header">
+        <span class="main__eyebrow">Semantica ERP</span>
+        <h1 class="main__headline">Tu portal de gestión laboral</h1>
+        <p class="main__subtitle">
+          Accede a tu nómina, certificaciones, vacaciones y más desde un solo lugar.
+        </p>
+      </div>
 
       <div class="panels">
         <!-- Panel izquierdo: Portal de Empleados -->
@@ -58,14 +64,174 @@
               certificado laboral histórico.
             </p>
           </div>
-          <a href="mailto:soporte@semantica.com.co" class="btn btn--ghost">
-            Contactar soporte
-            <i class="pi pi-envelope"></i>
+          <a
+            href="https://wa.me/573125829803"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn--ghost"
+          >
+            Escribir por WhatsApp
+            <i class="pi pi-whatsapp"></i>
           </a>
         </div>
       </div>
     </div>
   </main>
+
+  <!-- ── Acerca de ───────────────────────────────── -->
+  <section class="about" id="acerca">
+    <div class="about__inner">
+      <div class="about__header">
+        <span class="about__eyebrow">Nosotros</span>
+        <h2 class="about__title">Conoce Semantica</h2>
+      </div>
+
+      <div class="about__body">
+        <div class="about__narrative">
+          <p class="about__lead">Soluciones tecnológicas para la gestión laboral de tu empresa.</p>
+          <p class="about__desc">
+            Semantica es una plataforma diseñada para centralizar y simplificar la gestión laboral
+            de tu empresa. Desde nuestro portal, empleados y administradores acceden a nómina,
+            certificaciones, vacaciones, seguridad social y más, todo en un solo lugar.
+          </p>
+          <p class="about__desc">
+            Nuestro objetivo es transformar la manera en que las empresas gestionan sus procesos de
+            talento humano, ofreciendo herramientas modernas, seguras e integradas con tu sistema
+            ERP.
+          </p>
+        </div>
+
+        <div class="about__divider" aria-hidden="true"></div>
+
+        <div class="about__pillars">
+          <div class="about__pillar">
+            <i class="pi pi-shield about__pillar-icon"></i>
+            <h3 class="about__pillar-title">Seguridad</h3>
+            <p class="about__pillar-desc">Datos protegidos con los más altos estándares.</p>
+          </div>
+
+          <div class="about__pillar">
+            <i class="pi pi-clock about__pillar-icon"></i>
+            <h3 class="about__pillar-title">Disponibilidad</h3>
+            <p class="about__pillar-desc">Acceso 24/7 desde cualquier dispositivo.</p>
+          </div>
+
+          <div class="about__pillar">
+            <i class="pi pi-headphones about__pillar-icon"></i>
+            <h3 class="about__pillar-title">Soporte</h3>
+            <p class="about__pillar-desc">Equipo dedicado para resolver tus dudas.</p>
+          </div>
+
+          <div class="about__pillar">
+            <i class="pi pi-sync about__pillar-icon"></i>
+            <h3 class="about__pillar-title">Integración</h3>
+            <p class="about__pillar-desc">Conectado directamente con tu sistema ERP.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contáctenos ──────────────────────────────── -->
+  <section class="contact" id="contacto">
+    <div class="contact__inner">
+      <div class="contact__header">
+        <span class="contact__eyebrow">Contacto</span>
+        <h2 class="contact__title">Estamos para ayudarte</h2>
+        <p class="contact__subtitle">
+          Completa el formulario y nos pondremos en contacto contigo lo antes posible.
+        </p>
+      </div>
+
+      <div class="contact__card">
+        @if (contactSent()) {
+          <div class="contact__success">
+            <div class="contact__success-icon">
+              <i class="pi pi-check-circle"></i>
+            </div>
+            <h3 class="contact__success-title">Mensaje enviado</h3>
+            <p class="contact__success-text">Gracias por contactarnos. Te responderemos pronto.</p>
+            <button class="btn btn--ghost" (click)="contactSent.set(false)">
+              Enviar otro mensaje
+            </button>
+          </div>
+        } @else {
+          <form [formGroup]="contactForm" (ngSubmit)="submitContact()" class="contact__form">
+            <div class="contact__row">
+              <div class="contact__field">
+                <label class="contact__label" for="contact-nombre">Nombre</label>
+                <input
+                  id="contact-nombre"
+                  type="text"
+                  class="contact__input"
+                  formControlName="nombre"
+                  placeholder="Tu nombre completo"
+                />
+              </div>
+              <div class="contact__field">
+                <label class="contact__label" for="contact-correo">Correo electrónico</label>
+                <input
+                  id="contact-correo"
+                  type="email"
+                  class="contact__input"
+                  formControlName="correo"
+                  placeholder="correo&#64;ejemplo.com"
+                />
+              </div>
+            </div>
+
+            <div class="contact__row">
+              <div class="contact__field">
+                <label class="contact__label" for="contact-telefono">Teléfono</label>
+                <input
+                  id="contact-telefono"
+                  type="tel"
+                  class="contact__input"
+                  formControlName="telefono"
+                  placeholder="+57 300 000 0000"
+                />
+              </div>
+              <div class="contact__field">
+                <label class="contact__label" for="contact-empresa">Empresa</label>
+                <input
+                  id="contact-empresa"
+                  type="text"
+                  class="contact__input"
+                  formControlName="empresa"
+                  placeholder="Nombre de la empresa"
+                />
+              </div>
+            </div>
+
+            <div class="contact__field">
+              <label class="contact__label" for="contact-descripcion">Descripción</label>
+              <textarea
+                id="contact-descripcion"
+                class="contact__input contact__input--textarea"
+                formControlName="descripcion"
+                placeholder="¿En qué podemos ayudarte?"
+                rows="4"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn--primary contact__submit"
+              [disabled]="contactSending()"
+            >
+              @if (contactSending()) {
+                <i class="pi pi-spinner pi-spin"></i>
+                Enviando...
+              } @else {
+                Enviar mensaje
+                <i class="pi pi-send"></i>
+              }
+            </button>
+          </form>
+        }
+      </div>
+    </div>
+  </section>
 
   <!-- ── FAQs ──────────────────────────────────── -->
   <section class="faq">
@@ -95,11 +261,16 @@
   </section>
 
   <!-- ── Footer ─────────────────────────────────── -->
-  <footer class="footer" id="acerca">
+  <footer class="footer">
     <div class="footer__inner">
       <span class="footer__copy"
         >&copy; {{ currentYear }} Semantica. Todos los derechos reservados.</span
       >
+      <nav class="footer__links">
+        <a href="#contacto" class="footer__link">Contáctenos</a>
+        <a href="/politica-de-privacidad" class="footer__link">Política de privacidad</a>
+        <a href="/terminos-de-uso" class="footer__link">Términos de uso</a>
+      </nav>
     </div>
   </footer>
 </div>
