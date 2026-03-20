@@ -13,6 +13,7 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { AuthService } from '../../../auth/services/auth.service';
+import { ReclamoCreateDialogComponent } from '../../components/reclamo-create-dialog/reclamo-create-dialog.component';
 
 @Component({
   selector: 'app-reclamos-list',
@@ -26,6 +27,7 @@ import { AuthService } from '../../../auth/services/auth.service';
     ButtonModule,
     TagModule,
     DatePipe,
+    ReclamoCreateDialogComponent,
   ],
   templateUrl: './reclamos-list.component.html',
   styleUrl: './reclamos-list.component.scss',
@@ -40,6 +42,7 @@ export class ReclamosListComponent implements OnInit {
   readonly totalRecords = signal(0);
   readonly pageSize = signal(50);
   readonly first = signal(0);
+  readonly dialogVisible = signal(false);
 
   ngOnInit(): void {
     this.loadReclamos(1);
@@ -80,7 +83,11 @@ export class ReclamosListComponent implements OnInit {
   }
 
   onNuevo(): void {
-    // TODO: implementar creación de reclamo
+    this.dialogVisible.set(true);
+  }
+
+  onReclamoCreated(): void {
+    this.loadReclamos(1);
   }
 
   getEstado(reclamo: Reclamo): {

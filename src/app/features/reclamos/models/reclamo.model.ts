@@ -13,3 +13,14 @@ export interface Reclamo {
   estado_atendido: boolean;
   cantidad_respuestas: number;
 }
+
+export interface CreateReclamoRequest {
+  codigo_empleado_fk: number;
+  codigo_reclamo_concepto_fk: string;
+  descripcion: string;
+}
+
+export interface ReclamoConcepto {
+  codigo_reclamo_concepto_pk: string;
+  nombre: string;
+}
