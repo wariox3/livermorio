@@ -7,8 +7,10 @@ export interface Pago {
   vr_devengado: number;
   vr_deduccion: number;
   vr_neto: number;
+  codigo_pago_tipo_fk: string;
+  pago_tipo_nombre: string;
+  numero: number;
 }
-
 export interface PagosQueryParams {
   page?: number;
   size?: number;
