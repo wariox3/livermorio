@@ -2,7 +2,7 @@ export interface Reclamo {
   codigo_reclamo_pk: number;
   codigo_empleado_fk: number;
   codigo_reclamo_concepto_fk: string;
-  concepto_nombre: string;
+  reclamo_concepto_nombre: string;
   fecha: string;
   fecha_cierre: string;
   descripcion: string;

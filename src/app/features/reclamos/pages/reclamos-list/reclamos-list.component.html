@@ -46,7 +46,7 @@
         <ng-template #body let-reclamo>
           <tr>
             <td>{{ reclamo.codigo_reclamo_pk }}</td>
-            <td>{{ reclamo.concepto_nombre }}</td>
+            <td>{{ reclamo.reclamo_concepto_nombre }}</td>
             <td>{{ reclamo.fecha | date: 'dd/MM/yyyy' }}</td>
             <td class="descripcion-cell text-truncate">{{ reclamo.descripcion }}</td>
             <td>
