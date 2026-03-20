@@ -1,3 +1,62 @@
 <div class="page-container">
-  <h1>Reclamos</h1>
+  <app-page-header title="Reclamos" subtitle="Gestión de reclamos del empleado">
+    <p-button label="Nuevo" icon="pi pi-plus" (click)="onNuevo()" />
+  </app-page-header>
+
+  @if (loading() && reclamos().length === 0) {
+    <app-loading-spinner message="Cargando reclamos..." />
+  } @else if (error()) {
+    <app-error-alert [message]="error()!" [retryable]="false" />
+  } @else if (!loading() && reclamos().length === 0) {
+    <app-empty-state
+      title="Sin reclamos"
+      message="No se encontraron reclamos registrados."
+      icon="pi pi-exclamation-triangle"
+    />
+  } @else {
+    <div class="card">
+      <p-table
+        [value]="reclamos()"
+        [lazy]="true"
+        [lazyLoadOnInit]="false"
+        [totalRecords]="totalRecords()"
+        [paginator]="true"
+        [rows]="pageSize()"
+        [first]="first()"
+        [loading]="loading()"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [showGridlines]="false"
+        styleClass="p-datatable-sm"
+        stripedRows
+        (onLazyLoad)="onLazyLoad($event)"
+        [scrollable]="true"
+        scrollHeight="600px"
+      >
+        <ng-template #header>
+          <tr>
+            <th>Id</th>
+            <th>Concepto</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Respuestas</th>
+            <th>Fecha cierre</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-reclamo>
+          <tr>
+            <td>{{ reclamo.codigo_reclamo_pk }}</td>
+            <td>{{ reclamo.concepto_nombre }}</td>
+            <td>{{ reclamo.fecha | date: 'dd/MM/yyyy' }}</td>
+            <td class="descripcion-cell">{{ reclamo.descripcion }}</td>
+            <td>
+              <p-tag [value]="getEstado(reclamo).label" [severity]="getEstado(reclamo).severity" />
+            </td>
+            <td>{{ reclamo.cantidad_respuestas }}</td>
+            <td>{{ reclamo.fecha_cierre ? (reclamo.fecha_cierre | date: 'dd/MM/yyyy') : '—' }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  }
 </div>
