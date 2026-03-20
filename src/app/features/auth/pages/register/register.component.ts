@@ -2,6 +2,7 @@ import { Component, inject, signal, viewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
+  FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
   Validators,
@@ -11,6 +12,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
 import { AuthService } from '../../services/auth.service';
 import { extractErrorMessage } from '../../../../core/utils/error.utils';
 import { TurnstileComponent } from '../../../../shared';
@@ -28,11 +31,14 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    FormsModule,
     RouterLink,
     ButtonModule,
     InputTextModule,
     PasswordModule,
     MessageModule,
+    CheckboxModule,
+    DialogModule,
     TurnstileComponent,
   ],
   templateUrl: './register.component.html',
@@ -48,6 +54,8 @@ export class RegisterComponent {
   readonly errorMessage = signal<string | null>(null);
   readonly submitted = signal(false);
   readonly captchaToken = signal<string | null>(null);
+  readonly termsAccepted = signal(false);
+  readonly termsDialogVisible = signal(false);
 
   readonly form = this.fb.group(
     {
