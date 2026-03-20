@@ -1,14 +1,3 @@
-.card {
-  background: var(--p-surface-0);
-  border: 1px solid var(--p-surface-200);
-  padding: 2rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-}
-
 .descripcion-cell {
   max-width: 250px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }

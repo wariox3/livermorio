@@ -13,9 +13,3 @@ export interface Reclamo {
   estado_atendido: boolean;
   cantidad_respuestas: number;
 }
-
-export interface ReclamosQueryParams {
-  page?: number;
-  size?: number;
-  empleado_id: number;
-}

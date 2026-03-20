@@ -48,7 +48,7 @@
             <td>{{ reclamo.codigo_reclamo_pk }}</td>
             <td>{{ reclamo.concepto_nombre }}</td>
             <td>{{ reclamo.fecha | date: 'dd/MM/yyyy' }}</td>
-            <td class="descripcion-cell">{{ reclamo.descripcion }}</td>
+            <td class="descripcion-cell text-truncate">{{ reclamo.descripcion }}</td>
             <td>
               <p-tag [value]="getEstado(reclamo).label" [severity]="getEstado(reclamo).severity" />
             </td>

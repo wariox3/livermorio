@@ -11,8 +11,3 @@ export interface Pago {
   pago_tipo_nombre: string;
   numero: number;
 }
-export interface PagosQueryParams {
-  page?: number;
-  size?: number;
-  empleado_id: number;
-}
