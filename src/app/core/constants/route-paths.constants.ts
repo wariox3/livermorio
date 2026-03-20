@@ -19,4 +19,8 @@ export const ROUTE_PATHS = {
     seguridadSocial: '/dashboard/seguridad-social',
     turnos: '/dashboard/turnos',
   },
+  legal: {
+    politicaPrivacidad: '/politica-de-privacidad',
+    terminosUso: '/terminos-de-uso',
+  },
 } as const;
