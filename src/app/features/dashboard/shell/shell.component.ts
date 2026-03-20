@@ -89,12 +89,6 @@ export class ShellComponent {
       route: ROUTE_PATHS.dashboard.certificadoLaboral,
       requiresTenant: true,
     },
-    {
-      label: 'Cert. laboral histórico',
-      icon: 'pi pi-history',
-      route: ROUTE_PATHS.dashboard.certificadoLaboralHistorico,
-      requiresTenant: true,
-    },
   ];
 
   toggleDrawer(): void {
