@@ -31,7 +31,7 @@ export class ReclamoCreateDialogComponent {
 
   readonly form = this.fb.nonNullable.group({
     codigo_reclamo_concepto_fk: ['', Validators.required],
-    descripcion: ['', Validators.required],
+    descripcion: ['', [Validators.required, Validators.maxLength(2000)]],
   });
 
   onShow(): void {

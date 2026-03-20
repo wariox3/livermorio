@@ -41,6 +41,9 @@
       @if (form.controls.descripcion.touched && form.controls.descripcion.hasError('required')) {
         <small class="form-error">La descripción es requerida.</small>
       }
+      @if (form.controls.descripcion.touched && form.controls.descripcion.hasError('maxlength')) {
+        <small class="form-error">La descripción no puede exceder 2000 caracteres.</small>
+      }
     </div>
   </form>
 
