@@ -90,3 +90,14 @@
   background: color-mix(in srgb, var(--brand-blue) 30%, transparent) !important;
   color: var(--brand-blue) !important;
 }
+
+.prog-info-cell {
+  font-weight: 600;
+}
+
+.accion-col {
+  min-width: 110px;
+  width: 110px;
+  text-align: center;
+  vertical-align: middle;
+}
