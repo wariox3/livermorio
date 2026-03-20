@@ -698,67 +698,68 @@
     letter-spacing: -0.01em;
   }
 
-  &__input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-family: inherit;
-    font-size: 0.9rem;
-    color: var(--brand-text);
-    background: var(--brand-bg);
-    border: 1px solid var(--brand-border);
-    border-radius: 10px;
-    outline: none;
-    transition: all 0.18s ease;
-
-    &::placeholder {
-      color: var(--brand-muted-2);
-    }
-
-    &:focus {
-      border-color: var(--brand-navy);
-      box-shadow: 0 0 0 3px var(--brand-navy-glow);
-    }
-
-    &--textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
+  &__error {
+    font-size: 0.8rem;
+    color: var(--p-red-500);
   }
 
   &__submit {
     align-self: flex-start;
     margin-top: 0.5rem;
   }
+}
 
-  &__success {
+.success-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 0;
+  animation: fadeUp 0.45s ease both;
+
+  &__icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--p-green-500) 12%, transparent);
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
-    gap: 1rem;
-    padding: 2rem 0;
-  }
+    justify-content: center;
+    margin-bottom: 1.5rem;
 
-  &__success-icon {
     .pi {
-      font-size: 2.5rem;
-      color: var(--brand-navy);
+      font-size: 1.6rem;
+      color: var(--p-green-500);
     }
   }
 
-  &__success-title {
-    font-size: 1.3rem;
-    font-weight: 700;
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
     color: var(--brand-text);
-    margin: 0;
+    margin: 0 0 0.75rem;
   }
 
-  &__success-text {
-    font-size: 0.95rem;
+  &__desc {
+    font-size: 0.875rem;
+    line-height: 1.7;
     color: var(--brand-muted);
-    margin: 0;
-    max-width: 360px;
-    line-height: 1.6;
+    margin: 0 0 2rem;
+  }
+
+  &__back {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--brand-blue);
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.75;
+    }
   }
 }
 
