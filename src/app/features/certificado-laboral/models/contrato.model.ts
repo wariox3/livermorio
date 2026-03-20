@@ -5,9 +5,3 @@ export interface Contrato {
   fecha_hasta: string;
   vr_salario: number;
 }
-
-export interface ContratosQueryParams {
-  page?: number;
-  size?: number;
-  empleado_id: number;
-}

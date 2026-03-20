@@ -63,7 +63,7 @@
             aria-describedby="email-error"
           />
           @if (emailControl.invalid && emailControl.touched) {
-            <small id="email-error" class="field__error">
+            <small id="email-error" class="form-error">
               @if (emailControl.hasError('required')) {
                 El correo es requerido.
               } @else if (emailControl.hasError('email')) {
@@ -86,7 +86,7 @@
             aria-describedby="password-error"
           />
           @if (passwordControl.invalid && passwordControl.touched) {
-            <small id="password-error" class="field__error">
+            <small id="password-error" class="form-error">
               @if (passwordControl.hasError('required')) {
                 La contraseña es requerida.
               } @else if (passwordControl.hasError('minlength')) {

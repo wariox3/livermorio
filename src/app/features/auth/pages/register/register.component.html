@@ -64,7 +64,7 @@
               aria-describedby="nombres-error"
             />
             @if (nombresControl.invalid && nombresControl.touched) {
-              <small id="nombres-error" class="field__error">
+              <small id="nombres-error" class="form-error">
                 @if (nombresControl.hasError('required')) {
                   Los nombres son requeridos.
                 } @else if (nombresControl.hasError('minlength')) {
@@ -87,7 +87,7 @@
               aria-describedby="apellidos-error"
             />
             @if (apellidosControl.invalid && apellidosControl.touched) {
-              <small id="apellidos-error" class="field__error">
+              <small id="apellidos-error" class="form-error">
                 @if (apellidosControl.hasError('required')) {
                   Los apellidos son requeridos.
                 } @else if (apellidosControl.hasError('minlength')) {
@@ -112,7 +112,7 @@
               aria-describedby="identificacion-error"
             />
             @if (identificacionControl.invalid && identificacionControl.touched) {
-              <small id="identificacion-error" class="field__error">
+              <small id="identificacion-error" class="form-error">
                 El número de identificación es requerido.
               </small>
             }
@@ -131,7 +131,7 @@
               aria-describedby="email-error"
             />
             @if (emailControl.invalid && emailControl.touched) {
-              <small id="email-error" class="field__error">
+              <small id="email-error" class="form-error">
                 @if (emailControl.hasError('required')) {
                   El correo es requerido.
                 } @else if (emailControl.hasError('email')) {
@@ -153,7 +153,7 @@
               aria-describedby="password-error"
             />
             @if (passwordControl.invalid && passwordControl.touched) {
-              <small id="password-error" class="field__error">
+              <small id="password-error" class="form-error">
                 @if (passwordControl.hasError('required')) {
                   La contraseña es requerida.
                 } @else if (passwordControl.hasError('minlength')) {
@@ -182,7 +182,7 @@
               (confirmPasswordControl.invalid && confirmPasswordControl.touched) ||
               (form.hasError('passwordMismatch') && confirmPasswordControl.touched)
             ) {
-              <small id="confirm-error" class="field__error">
+              <small id="confirm-error" class="form-error">
                 @if (confirmPasswordControl.hasError('required')) {
                   Debes confirmar la contraseña.
                 } @else if (form.hasError('passwordMismatch')) {
@@ -190,6 +190,22 @@
                 }
               </small>
             }
+          </div>
+
+          <div class="field field--terms">
+            <p-checkbox
+              [binary]="true"
+              [ngModel]="termsAccepted()"
+              [ngModelOptions]="{ standalone: true }"
+              (ngModelChange)="termsAccepted.set($event)"
+              inputId="terms"
+            />
+            <label for="terms" class="field__terms-label">
+              Acepto los
+              <a (click)="termsDialogVisible.set(true); $event.preventDefault()" href="#">
+                términos y condiciones
+              </a>
+            </label>
           </div>
 
           <app-turnstile
@@ -204,7 +220,7 @@
             fluid
             styleClass="auth-btn"
             [loading]="isLoading()"
-            [disabled]="isLoading() || !captchaToken()"
+            [disabled]="isLoading() || !captchaToken() || !termsAccepted()"
           />
 
           <p class="form-footer">
@@ -228,3 +244,119 @@
     </div>
   </div>
 </div>
+
+<p-dialog
+  header="Términos y condiciones"
+  [(visible)]="termsDialogVisible"
+  [modal]="true"
+  [dismissableMask]="true"
+  [style]="{ width: '680px', maxHeight: '80vh' }"
+  [breakpoints]="{ '768px': '95vw' }"
+>
+  <div class="terms-content">
+    <section>
+      <h3>1. Aceptación de términos</h3>
+      <p>
+        Al acceder y utilizar el portal de empleados de Semantica S.A.S. (en adelante "Semantica" o
+        "la plataforma"), usted acepta cumplir con los presentes términos y condiciones de uso. Si
+        no está de acuerdo con alguna parte de estos términos, le solicitamos abstenerse de utilizar
+        el portal.
+      </p>
+    </section>
+
+    <section>
+      <h3>2. Descripción del servicio</h3>
+      <p>
+        Semantica es una plataforma web de gestión laboral que permite a empleados y administradores
+        acceder a servicios como:
+      </p>
+      <ul>
+        <li>Consulta de nómina y comprobantes de pago.</li>
+        <li>Descarga de certificaciones laborales.</li>
+        <li>Gestión de vacaciones y permisos.</li>
+        <li>Consulta de seguridad social.</li>
+        <li>Programación de turnos.</li>
+        <li>Acceso a capacitaciones en línea.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>3. Cuentas y credenciales</h3>
+      <p>
+        Para acceder al portal, usted debe registrarse con el correo electrónico proporcionado por
+        su empresa y crear una contraseña segura. Usted es responsable de:
+      </p>
+      <ul>
+        <li>Mantener la confidencialidad de sus credenciales de acceso.</li>
+        <li>Notificar de inmediato cualquier uso no autorizado de su cuenta.</li>
+        <li>Toda la actividad que ocurra bajo su cuenta, sea o no autorizada por usted.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>4. Uso aceptable</h3>
+      <p>
+        El usuario se compromete a utilizar el portal únicamente para los fines laborales previstos.
+        Queda prohibido:
+      </p>
+      <ul>
+        <li>Intentar acceder a información de otros empleados o cuentas sin autorización.</li>
+        <li>Utilizar el portal para actividades ilegales, fraudulentas o no autorizadas.</li>
+        <li>Interferir con el funcionamiento normal de la plataforma.</li>
+        <li>Reproducir, distribuir o modificar cualquier contenido del portal sin autorización.</li>
+        <li>Utilizar herramientas automatizadas para extraer información del portal.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>5. Propiedad intelectual</h3>
+      <p>
+        Todo el contenido del portal es propiedad de Semantica o de sus licenciantes y está
+        protegido por las leyes de propiedad intelectual de Colombia y los tratados internacionales
+        aplicables.
+      </p>
+    </section>
+
+    <section>
+      <h3>6. Disponibilidad del servicio</h3>
+      <p>
+        Semantica se esfuerza por mantener el portal disponible las 24 horas del día, los 7 días de
+        la semana. Sin embargo, no garantizamos que el servicio será ininterrumpido o libre de
+        errores.
+      </p>
+    </section>
+
+    <section>
+      <h3>7. Limitación de responsabilidad</h3>
+      <p>
+        Semantica no será responsable por daños directos, indirectos, incidentales, consecuentes o
+        punitivos que resulten del uso o la imposibilidad de uso del portal.
+      </p>
+    </section>
+
+    <section>
+      <h3>8. Modificaciones a los términos</h3>
+      <p>
+        Semantica se reserva el derecho de modificar estos términos de uso en cualquier momento. Las
+        modificaciones entrarán en vigencia a partir de su publicación en esta página.
+      </p>
+    </section>
+
+    <section>
+      <h3>9. Ley aplicable y jurisdicción</h3>
+      <p>
+        Los presentes términos se rigen por las leyes de la República de Colombia. Cualquier
+        controversia será sometida a la jurisdicción de los tribunales de Bogotá D.C., Colombia.
+      </p>
+    </section>
+
+    <section>
+      <h3>10. Contacto</h3>
+      <p>Para consultas sobre estos términos:</p>
+      <ul>
+        <li><strong>Correo:</strong> soporte&#64;semantica.com.co</li>
+        <li><strong>WhatsApp:</strong> +57 312 582 9803</li>
+      </ul>
+    </section>
+  </div>
+</p-dialog>

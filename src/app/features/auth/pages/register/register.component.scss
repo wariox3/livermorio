@@ -223,9 +223,26 @@
     letter-spacing: -0.01em;
   }
 
-  &__error {
-    font-size: 0.8rem;
-    color: var(--p-red-500);
+  &--terms {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  &__terms-label {
+    font-size: 0.84rem;
+    color: var(--brand-muted);
+
+    a {
+      color: var(--brand-blue);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
@@ -244,6 +261,40 @@
 
     &:hover {
       opacity: 0.75;
+    }
+  }
+}
+
+// ─── Contenido del diálogo de términos ───────────────────────────────────────
+.terms-content {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--brand-text);
+  max-height: 60vh;
+  overflow-y: auto;
+
+  section {
+    margin-bottom: 1.25rem;
+  }
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 0.4rem;
+  }
+
+  p {
+    margin: 0 0 0.5rem;
+    color: var(--brand-muted);
+  }
+
+  ul {
+    margin: 0.25rem 0 0.5rem 1.25rem;
+    padding: 0;
+    color: var(--brand-muted);
+
+    li {
+      margin-bottom: 0.25rem;
     }
   }
 }

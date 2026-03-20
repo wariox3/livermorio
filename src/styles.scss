@@ -77,3 +77,22 @@ body {
 .mt-2 {
   margin-top: 0.5rem;
 }
+
+.card {
+  background: var(--p-surface-0);
+  border: 1px solid var(--p-surface-200);
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.form-error {
+  font-size: 0.8rem;
+  color: var(--p-red-500);
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.5](https://github.com/tamerlantian/livermorio/compare/v0.0.4...v0.0.5) (2026-03-20)
+
+### Features
+
+- **dashboard:** redesign inicio page with quick access cards ([a2f293d](https://github.com/tamerlantian/livermorio/commit/a2f293d439304de571628cc1786b3d77cdb3e7d5))
+- **landing:** add FAQ section with custom accordion ([47f908d](https://github.com/tamerlantian/livermorio/commit/47f908daed02bf1bca8e08bbd4bfd583324e1a7a))
+- **landing:** add hero header, about section, contact form, and footer links ([de2544d](https://github.com/tamerlantian/livermorio/commit/de2544dd77e617fd9ee2f3b972a017f20135f721))
+- **landing:** integrate PrimeNG inputs and real contact API endpoint ([ea5161d](https://github.com/tamerlantian/livermorio/commit/ea5161dfc6fc81b4bb4e748c0a6c60c824517e11))
+- **legal:** add privacy policy and terms of use pages ([6241e18](https://github.com/tamerlantian/livermorio/commit/6241e1821e417fee7b7cf8a344d8c1078fef55f2))
+- **pagos:** add tipo, número columns and fix id display in pagos list ([e4e166d](https://github.com/tamerlantian/livermorio/commit/e4e166df565b21bd278dce1595e0a4faded17a61))
+- **reclamos:** add create reclamo dialog with concepto selector ([802930e](https://github.com/tamerlantian/livermorio/commit/802930e123e91d2bb48c1a60666e90bc0a484bdb))
+- **reclamos:** add maxlength validation to descripcion field ([1b77ab0](https://github.com/tamerlantian/livermorio/commit/1b77ab0786579ccce468e5b01d0b367aa604cecf))
+- **reclamos:** add row expansion to view reclamo responses ([6e4f67c](https://github.com/tamerlantian/livermorio/commit/6e4f67c49d0355dcc367840bbb96d7180a99627c))
+- **reclamos:** implement reclamos list with lazy-load table and status badges ([f768f11](https://github.com/tamerlantian/livermorio/commit/f768f111b7d713a47e4cd9b6c721a064564af6bc))
+- **register:** add terms and conditions acceptance checkbox ([57f7a58](https://github.com/tamerlantian/livermorio/commit/57f7a5814f04c09681bd6b5352e0b74e31d431fe))
+- **turnos:** add reporte create dialog from programacion table ([3ee59a8](https://github.com/tamerlantian/livermorio/commit/3ee59a8725529e1055fc884773b0cb15649fd5f6))
+- **turnos:** add reportes table with row expansion for responses ([a37e384](https://github.com/tamerlantian/livermorio/commit/a37e3848258646fe4f75bbdcd6585d07ca780ddc))
+
+### Bug Fixes
+
+- **landing:** display about section pillar icons inline with text ([ea31ade](https://github.com/tamerlantian/livermorio/commit/ea31ade13f34ca9fcebaafdbab72bc282064e9db))
+- **reclamos:** rename concepto_nombre to reclamo_concepto_nombre ([7ed7515](https://github.com/tamerlantian/livermorio/commit/7ed751581fb26340dedff115bfd079410feb3688))
+- **shell:** remove certificado laboral histórico menu item ([ea63c8a](https://github.com/tamerlantian/livermorio/commit/ea63c8a5549f0fad16d0e052b275f493125750d9))
+
+### Refactoring
+
+- centralize BaseQueryParams in core and extract shared styles ([ba5a269](https://github.com/tamerlantian/livermorio/commit/ba5a2696f66b36893cb6e73da011677864fa8fd7))
+- **landing:** redesign contact success state and reorder sections ([c242bea](https://github.com/tamerlantian/livermorio/commit/c242bea948a465376ba88f116d50c1631e4baf30))
+- moved reclamos to pages folder ([7fb2746](https://github.com/tamerlantian/livermorio/commit/7fb27468de69563ceb82933763538a7800712618))
+- unify validation error styles with global .form-error class ([47f7a08](https://github.com/tamerlantian/livermorio/commit/47f7a08cc549e10f356ca6abc21c8d9c78740b29))
+
 ## [0.0.4](https://github.com/tamerlantian/livermorio/compare/v0.0.3...v0.0.4) (2026-03-19)
 
 ### Features

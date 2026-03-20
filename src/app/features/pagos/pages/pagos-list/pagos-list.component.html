@@ -34,6 +34,7 @@
           <tr>
             <th>Id</th>
             <th>Tipo</th>
+            <th>Número</th>
             <th>Desde</th>
             <th>Hasta</th>
             <th>Salario</th>
@@ -45,8 +46,9 @@
         </ng-template>
         <ng-template #body let-pago>
           <tr>
-            <td></td>
-            <td></td>
+            <td>{{ pago.codigo_pago_pk }}</td>
+            <td>{{ pago.pago_tipo_nombre }}</td>
+            <td>{{ pago.numero }}</td>
             <td>{{ pago.fecha_desde | date: 'dd/MM/yyyy' }}</td>
             <td>{{ pago.fecha_hasta | date: 'dd/MM/yyyy' }}</td>
             <td>{{ pago.vr_salario_contrato | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>

@@ -19,7 +19,9 @@
     <div class="turno-card__body">
       <div class="turno-card__badge-row">
         <div class="turno-card__tags">
-          <span class="turno-card__tag">{{ turno.tercero_nombre_corto }}</span>
+          <span class="turno-card__tag">{{
+            turno.tercero_nombre_corto || 'No registra tercero'
+          }}</span>
         </div>
       </div>
 
@@ -31,7 +33,9 @@
             </div>
             <div class="turno-card__detail-content">
               <span class="turno-card__detail-value">{{ turno.puesto_nombre }}</span>
-              <span class="turno-card__detail-sub">{{ turno.puesto_direccion }}</span>
+              <span class="turno-card__detail-sub">{{
+                turno.puesto_direccion || 'No registra dirección'
+              }}</span>
             </div>
           </div>
         </div>
@@ -43,7 +47,9 @@
             </div>
             <div class="turno-card__detail-content">
               <span class="turno-card__detail-label">Coordinador</span>
-              <span class="turno-card__detail-value">{{ turno.coordinador_nombre }}</span>
+              <span class="turno-card__detail-value">{{
+                turno.coordinador_nombre || 'No registra coordinador'
+              }}</span>
             </div>
           </div>
           <div class="turno-card__detail">
@@ -52,7 +58,9 @@
             </div>
             <div class="turno-card__detail-content">
               <span class="turno-card__detail-label">Programador</span>
-              <span class="turno-card__detail-value">{{ turno.programador_nombre }}</span>
+              <span class="turno-card__detail-value">{{
+                turno.programador_nombre || 'No registra programador'
+              }}</span>
             </div>
           </div>
         </div>

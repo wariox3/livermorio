@@ -14,7 +14,7 @@ import { buildHttpParams, type ParamValue } from '../utils/http-params.utils';
  * ```ts
  * @Injectable({ providedIn: 'root' })
  * export class PagosService extends BaseHttpService {
- *   getPagos(params?: PagosQueryParams): Observable<PaginatedResponse<Pago>> {
+ *   getPagos(params?: BaseQueryParams): Observable<PaginatedResponse<Pago>> {
  *     return this.get<PaginatedResponse<Pago>>(API_ENDPOINTS.pagos.lista, { ... });
  *   }
  * }

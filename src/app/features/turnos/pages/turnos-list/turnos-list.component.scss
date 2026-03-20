@@ -1,15 +1,32 @@
-.turnos-grid {
+.turnos-layout {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
+  align-items: stretch;
 
   @media (max-width: 768px) {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
-app-programacion-table,
-app-programacion-calendar {
+.turnos-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.turnos-calendar {
+  display: flex;
+  flex-direction: column;
+
+  app-programacion-calendar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+app-programacion-table {
   display: block;
   margin-top: 1.5rem;
   overflow: hidden;

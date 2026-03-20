@@ -20,5 +20,19 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
   },
+  {
+    path: 'politica-de-privacidad',
+    loadComponent: () =>
+      import('./features/legal/politica-privacidad/politica-privacidad.component').then(
+        (m) => m.PoliticaPrivacidadComponent,
+      ),
+  },
+  {
+    path: 'terminos-de-uso',
+    loadComponent: () =>
+      import('./features/legal/terminos-uso/terminos-uso.component').then(
+        (m) => m.TerminosUsoComponent,
+      ),
+  },
   { path: '**', redirectTo: 'auth/login' },
 ];
