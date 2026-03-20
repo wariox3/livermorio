@@ -25,7 +25,7 @@
         form.controls.codigo_reclamo_concepto_fk.touched &&
         form.controls.codigo_reclamo_concepto_fk.hasError('required')
       ) {
-        <small class="p-error">El concepto es requerido.</small>
+        <small class="form-error">El concepto es requerido.</small>
       }
     </div>
 
@@ -39,7 +39,7 @@
         [style]="{ width: '100%' }"
       ></textarea>
       @if (form.controls.descripcion.touched && form.controls.descripcion.hasError('required')) {
-        <small class="p-error">La descripción es requerida.</small>
+        <small class="form-error">La descripción es requerida.</small>
       }
     </div>
   </form>

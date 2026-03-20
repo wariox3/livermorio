@@ -216,7 +216,7 @@
                   [invalid]="correoControl.invalid && correoControl.touched"
                 />
                 @if (correoControl.invalid && correoControl.touched) {
-                  <small class="contact__error">
+                  <small class="form-error">
                     @if (correoControl.hasError('required')) {
                       El correo es requerido.
                     } @else if (correoControl.hasError('email')) {
@@ -240,7 +240,7 @@
                   [invalid]="telefonoControl.invalid && telefonoControl.touched"
                 />
                 @if (telefonoControl.invalid && telefonoControl.touched) {
-                  <small class="contact__error">El teléfono es requerido.</small>
+                  <small class="form-error">El teléfono es requerido.</small>
                 }
               </div>
               <div class="contact__field">

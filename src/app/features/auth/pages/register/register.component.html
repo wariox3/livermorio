@@ -64,7 +64,7 @@
               aria-describedby="nombres-error"
             />
             @if (nombresControl.invalid && nombresControl.touched) {
-              <small id="nombres-error" class="field__error">
+              <small id="nombres-error" class="form-error">
                 @if (nombresControl.hasError('required')) {
                   Los nombres son requeridos.
                 } @else if (nombresControl.hasError('minlength')) {
@@ -87,7 +87,7 @@
               aria-describedby="apellidos-error"
             />
             @if (apellidosControl.invalid && apellidosControl.touched) {
-              <small id="apellidos-error" class="field__error">
+              <small id="apellidos-error" class="form-error">
                 @if (apellidosControl.hasError('required')) {
                   Los apellidos son requeridos.
                 } @else if (apellidosControl.hasError('minlength')) {
@@ -112,7 +112,7 @@
               aria-describedby="identificacion-error"
             />
             @if (identificacionControl.invalid && identificacionControl.touched) {
-              <small id="identificacion-error" class="field__error">
+              <small id="identificacion-error" class="form-error">
                 El número de identificación es requerido.
               </small>
             }
@@ -131,7 +131,7 @@
               aria-describedby="email-error"
             />
             @if (emailControl.invalid && emailControl.touched) {
-              <small id="email-error" class="field__error">
+              <small id="email-error" class="form-error">
                 @if (emailControl.hasError('required')) {
                   El correo es requerido.
                 } @else if (emailControl.hasError('email')) {
@@ -153,7 +153,7 @@
               aria-describedby="password-error"
             />
             @if (passwordControl.invalid && passwordControl.touched) {
-              <small id="password-error" class="field__error">
+              <small id="password-error" class="form-error">
                 @if (passwordControl.hasError('required')) {
                   La contraseña es requerida.
                 } @else if (passwordControl.hasError('minlength')) {
@@ -182,7 +182,7 @@
               (confirmPasswordControl.invalid && confirmPasswordControl.touched) ||
               (form.hasError('passwordMismatch') && confirmPasswordControl.touched)
             ) {
-              <small id="confirm-error" class="field__error">
+              <small id="confirm-error" class="form-error">
                 @if (confirmPasswordControl.hasError('required')) {
                   Debes confirmar la contraseña.
                 } @else if (form.hasError('passwordMismatch')) {
