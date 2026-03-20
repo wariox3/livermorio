@@ -20,6 +20,13 @@ export interface CreateReclamoRequest {
   descripcion: string;
 }
 
+export interface ReclamoRespuesta {
+  codigo_reclamo_respuesta_pk: number;
+  codigo_reclamo_fk: number;
+  fecha: string;
+  respuesta: string;
+}
+
 export interface ReclamoConcepto {
   codigo_reclamo_concepto_pk: string;
   nombre: string;

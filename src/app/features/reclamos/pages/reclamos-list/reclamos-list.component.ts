@@ -7,11 +7,12 @@ import {
   ErrorAlertComponent,
 } from '../../../../shared';
 import { ReclamosService } from '../../services/reclamos.service';
-import { Reclamo } from '../../models/reclamo.model';
+import { Reclamo, ReclamoRespuesta } from '../../models/reclamo.model';
 import { extractErrorMessage } from '../../../../core/utils/error.utils';
-import { TableLazyLoadEvent, TableModule } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule, TableRowExpandEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { TooltipModule } from 'primeng/tooltip';
 import { AuthService } from '../../../auth/services/auth.service';
 import { ReclamoCreateDialogComponent } from '../../components/reclamo-create-dialog/reclamo-create-dialog.component';
 
@@ -26,6 +27,7 @@ import { ReclamoCreateDialogComponent } from '../../components/reclamo-create-di
     TableModule,
     ButtonModule,
     TagModule,
+    TooltipModule,
     DatePipe,
     ReclamoCreateDialogComponent,
   ],
@@ -43,6 +45,11 @@ export class ReclamosListComponent implements OnInit {
   readonly pageSize = signal(50);
   readonly first = signal(0);
   readonly dialogVisible = signal(false);
+  readonly expandedRows = signal<Record<string, boolean>>({});
+
+  readonly respuestasCache = signal<Map<number, ReclamoRespuesta[]>>(new Map());
+  readonly respuestasLoading = signal<Set<number>>(new Set());
+  readonly respuestasError = signal<Map<number, string>>(new Map());
 
   ngOnInit(): void {
     this.loadReclamos(1);
@@ -88,6 +95,50 @@ export class ReclamosListComponent implements OnInit {
 
   onReclamoCreated(): void {
     this.loadReclamos(1);
+  }
+
+  onRowExpand(event: TableRowExpandEvent): void {
+    const reclamo = event.data as Reclamo;
+    const id = reclamo.codigo_reclamo_pk;
+
+    if (this.respuestasCache().has(id)) return;
+
+    this.fetchRespuestas(id);
+  }
+
+  retryLoadRespuestas(reclamo: Reclamo): void {
+    const id = reclamo.codigo_reclamo_pk;
+    const errorMap = new Map(this.respuestasError());
+    errorMap.delete(id);
+    this.respuestasError.set(errorMap);
+    this.fetchRespuestas(id);
+  }
+
+  private fetchRespuestas(id: number): void {
+    const loadingSet = new Set(this.respuestasLoading());
+    loadingSet.add(id);
+    this.respuestasLoading.set(loadingSet);
+
+    this.reclamosService.getRespuestas(id).subscribe({
+      next: (res) => {
+        const cache = new Map(this.respuestasCache());
+        cache.set(id, res.items);
+        this.respuestasCache.set(cache);
+
+        const loading = new Set(this.respuestasLoading());
+        loading.delete(id);
+        this.respuestasLoading.set(loading);
+      },
+      error: (err) => {
+        const loading = new Set(this.respuestasLoading());
+        loading.delete(id);
+        this.respuestasLoading.set(loading);
+
+        const errorMap = new Map(this.respuestasError());
+        errorMap.set(id, extractErrorMessage(err, 'No se pudieron cargar las respuestas.'));
+        this.respuestasError.set(errorMap);
+      },
+    });
   }
 
   getEstado(reclamo: Reclamo): {
