@@ -38,7 +38,7 @@ export class ReporteCreateDialogComponent {
 
   readonly form = this.fb.nonNullable.group({
     codigo_programacion_reporte_tipo_fk: ['', Validators.required],
-    comentario: ['', [Validators.required, Validators.maxLength(2000)]],
+    comentario: ['', [Validators.required, Validators.maxLength(500)]],
     dia_desde: [1, [Validators.required, Validators.min(1)]],
     dia_hasta: [1, [Validators.required, Validators.min(1)]],
   });

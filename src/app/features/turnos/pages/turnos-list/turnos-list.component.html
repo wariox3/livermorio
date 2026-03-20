@@ -42,5 +42,9 @@
         [diaActual]="diaActual"
       />
     }
+
+    @if (empleadoId() > 0) {
+      <app-reportes-table [empleadoId]="empleadoId()" />
+    }
   }
 </div>

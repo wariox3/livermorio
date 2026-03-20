@@ -8,6 +8,7 @@ import { LoadingSpinnerComponent } from '../../../../shared/components/loading-s
 import { TurnoCardComponent } from '../../components/turno-card/turno-card.component';
 import { ProgramacionTableComponent } from '../../components/programacion-table/programacion-table.component';
 import { ProgramacionCalendarComponent } from '../../components/programacion-calendar/programacion-calendar.component';
+import { ReportesTableComponent } from '../../components/reportes-table/reportes-table.component';
 
 @Component({
   selector: 'app-turnos-list',
@@ -18,6 +19,7 @@ import { ProgramacionCalendarComponent } from '../../components/programacion-cal
     TurnoCardComponent,
     ProgramacionTableComponent,
     ProgramacionCalendarComponent,
+    ReportesTableComponent,
   ],
   templateUrl: './turnos-list.component.html',
   styleUrl: './turnos-list.component.scss',
@@ -37,6 +39,8 @@ export class TurnosListComponent implements OnInit {
     const totalDias = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0).getDate();
     return Array.from({ length: totalDias }, (_, i) => i + 1);
   });
+
+  readonly empleadoId = computed(() => this.authService.currentUser()?.empleado_id ?? 0);
 
   ngOnInit(): void {
     const user = this.authService.currentUser();

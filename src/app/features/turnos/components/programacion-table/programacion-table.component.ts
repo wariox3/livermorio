@@ -27,6 +27,6 @@ export class ProgramacionTableComponent {
   }
 
   onReporteCreado(): void {
-    // El diálogo ya muestra el toast de éxito; aquí se puede recargar datos si es necesario
+    // El diálogo ya muestra el toast de éxito
   }
 }

@@ -74,6 +74,14 @@ export interface CreateProgramacionReporteRequest {
   dia_hasta: number;
 }
 
+export interface ProgramacionReporteRespuesta {
+  codigo_programacion_reporte_respuesta_pk: number;
+  codigo_programacion_reporte_fk: number;
+  fecha: string;
+  respuesta: string;
+  usuario: string;
+}
+
 export interface ProgramacionReporte {
   codigo_programacion_reporte_pk: number;
   codigo_programacion_fk: number;
