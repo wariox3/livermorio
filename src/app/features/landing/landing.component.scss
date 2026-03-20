@@ -88,7 +88,7 @@
   &__inner {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 1.125rem 2rem;
+    padding: 0.125rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -100,7 +100,7 @@
   }
 
   &__logo-img {
-    height: 40px;
+    height: 60px;
     width: auto;
     object-fit: contain;
   }
@@ -291,6 +291,131 @@
     color: var(--brand-muted);
     margin: 0;
     max-width: 300px;
+  }
+}
+
+// ─── FAQ ─────────────────────────────────────────────────────────────────────
+.faq {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 2rem 5rem;
+  animation: fadeUp 0.65s ease both;
+  animation-delay: 0.15s;
+
+  &__inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand-muted-2);
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--brand-text);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  &__subtitle {
+    font-size: 0.95rem;
+    color: var(--brand-muted);
+    margin: 0;
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  &__list {
+    background: var(--brand-surface);
+    border: 1px solid var(--brand-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 24px 64px rgba(0 0 0 / 0.08),
+      0 4px 16px rgba(0 0 0 / 0.04);
+  }
+
+  &__item {
+    border-bottom: 1px solid var(--brand-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--brand-text);
+    text-align: left;
+    transition: background 0.18s ease;
+
+    &:hover {
+      background: var(--brand-surface-2);
+    }
+  }
+
+  &__chevron {
+    font-size: 0.8rem;
+    color: var(--brand-muted);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  &__answer {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.35s ease,
+      opacity 0.25s ease;
+
+    p {
+      padding: 0 1.75rem 1.25rem;
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--brand-muted);
+    }
+  }
+
+  &__item--open {
+    .faq__chevron {
+      transform: rotate(180deg);
+    }
+
+    .faq__answer {
+      max-height: 200px;
+      opacity: 1;
+    }
   }
 }
 

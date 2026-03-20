@@ -67,6 +67,33 @@
     </div>
   </main>
 
+  <!-- ── FAQs ──────────────────────────────────── -->
+  <section class="faq">
+    <div class="faq__inner">
+      <div class="faq__header">
+        <span class="faq__eyebrow">Soporte</span>
+        <h2 class="faq__title">Preguntas frecuentes</h2>
+        <p class="faq__subtitle">
+          Encuentra respuestas a las consultas más comunes sobre el portal de empleados.
+        </p>
+      </div>
+
+      <div class="faq__list">
+        @for (item of faqItems; track item.question; let i = $index) {
+          <div class="faq__item" [class.faq__item--open]="openIndex() === i">
+            <button class="faq__question" (click)="toggle(i)">
+              <span>{{ item.question }}</span>
+              <i class="pi pi-chevron-down faq__chevron"></i>
+            </button>
+            <div class="faq__answer">
+              <p>{{ item.answer }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
   <!-- ── Footer ─────────────────────────────────── -->
   <footer class="footer" id="acerca">
     <div class="footer__inner">
