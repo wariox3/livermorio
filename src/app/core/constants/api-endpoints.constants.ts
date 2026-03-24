@@ -11,5 +11,6 @@ export const API_ENDPOINTS = {
     register: '/auth/user/registrar',
     verifyEmail: '/auth/user/verificar',
     asociarEmpresa: '/auth/user/asociar',
+    resendVerification: '/auth/user/reenviar-verificacion',
   },
 } as const;

@@ -8,6 +8,7 @@ import {
   LoginRequest,
   RegisterRequest,
   RegisterResponse,
+  ResendVerificationRequest,
   Usuario,
 } from '../models/auth.model';
 import { environment } from '../../../../environments/environment';
@@ -114,6 +115,16 @@ export class AuthService {
   register(data: RegisterRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(
       `${environment.apiUrl}${API_ENDPOINTS.auth.register}`,
+      data,
+    );
+  }
+
+  /**
+   * Reenvía el correo de verificación de cuenta.
+   */
+  resendVerification(data: ResendVerificationRequest): Observable<void> {
+    return this.http.post<void>(
+      `${environment.apiUrl}${API_ENDPOINTS.auth.resendVerification}`,
       data,
     );
   }

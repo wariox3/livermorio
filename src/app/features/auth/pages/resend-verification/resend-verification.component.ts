@@ -1,46 +1,51 @@
-import { Component, inject, signal, viewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../../services/auth.service';
 import { extractErrorMessage } from '../../../../core/utils/error.utils';
-import { ROUTE_PATHS } from '../../../../core/constants/route-paths.constants';
 import { TurnstileComponent } from '../../../../shared';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-resend-verification',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     RouterLink,
     ButtonModule,
     InputTextModule,
-    PasswordModule,
     MessageModule,
     TurnstileComponent,
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  templateUrl: './resend-verification.component.html',
+  styleUrl: './resend-verification.component.scss',
 })
-export class LoginComponent {
+export class ResendVerificationComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-
   private readonly turnstile = viewChild(TurnstileComponent);
 
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
+  readonly submitted = signal(false);
   readonly captchaToken = signal<string | null>(null);
+  readonly cooldown = signal(0);
+
+  private cooldownInterval: ReturnType<typeof setInterval> | null = null;
 
   readonly form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
   });
+
+  ngOnInit(): void {
+    const email = this.route.snapshot.queryParamMap.get('email');
+    if (email) {
+      this.form.patchValue({ email });
+    }
+  }
 
   onSubmit(): void {
     if (this.form.invalid) {
@@ -51,44 +56,50 @@ export class LoginComponent {
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
-    const { email, password } = this.form.getRawValue();
+    const { email } = this.form.getRawValue();
 
     this.authService
-      .login({
-        email: email!,
-        password: password!,
-        client_type: 'web',
-        turnstile_token: this.captchaToken()!,
-      })
+      .resendVerification({ email: email!, turnstile_token: this.captchaToken()! })
       .subscribe({
         next: () => {
           this.turnstile()?.reset();
-          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-          const safeUrl =
-            returnUrl?.startsWith('/') && !returnUrl.startsWith('//') ? returnUrl : '/dashboard';
-          this.router.navigateByUrl(safeUrl);
+          this.captchaToken.set(null);
+          this.submitted.set(true);
+          this.isLoading.set(false);
+          this.startCooldown();
         },
         error: (err) => {
           this.turnstile()?.reset();
           this.captchaToken.set(null);
-
-          if (err.error?.error?.is_verified === false) {
-            this.router.navigate([ROUTE_PATHS.auth.resendVerification], {
-              queryParams: { email: this.form.getRawValue().email },
-            });
-            return;
-          }
-
-          this.errorMessage.set(extractErrorMessage(err, 'Credenciales inválidas.'));
+          this.errorMessage.set(
+            extractErrorMessage(err, 'No se pudo reenviar el correo. Inténtalo de nuevo.'),
+          );
           this.isLoading.set(false);
         },
       });
   }
 
+  resendAgain(): void {
+    this.submitted.set(false);
+  }
+
+  private startCooldown(): void {
+    this.cooldown.set(60);
+    this.cooldownInterval = setInterval(() => {
+      const current = this.cooldown();
+      if (current <= 1) {
+        this.cooldown.set(0);
+        if (this.cooldownInterval) {
+          clearInterval(this.cooldownInterval);
+          this.cooldownInterval = null;
+        }
+      } else {
+        this.cooldown.set(current - 1);
+      }
+    }, 1000);
+  }
+
   get emailControl() {
     return this.form.controls.email;
-  }
-  get passwordControl() {
-    return this.form.controls.password;
   }
 }

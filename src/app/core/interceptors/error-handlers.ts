@@ -4,6 +4,7 @@ import { AuthService } from '../../features/auth/services/auth.service';
 import { ToastService } from '../services/toast.service';
 import { TokenRefreshService } from '../services/token-refresh.service';
 import { API_ENDPOINTS } from '../constants/api-endpoints.constants';
+import { parseApiError } from '../utils/error.utils';
 
 const AUTH_SKIP_URLS = [
   API_ENDPOINTS.auth.login,
@@ -66,7 +67,14 @@ export function handleUnauthorized(
 }
 
 export function handleForbidden(toast: ToastService, error: HttpErrorResponse): Observable<never> {
-  toast.error('Acceso denegado', 'No tienes permisos para realizar esta acción.');
+  const apiError = parseApiError(error);
+
+  if (apiError?.['is_verified'] === false) {
+    return throwError(() => error);
+  }
+
+  const message = apiError?.message ?? 'No tienes permisos para realizar esta acción.';
+  toast.error('Acceso denegado', message);
   return throwError(() => error);
 }
 
@@ -74,8 +82,9 @@ export function handleTooManyRequests(
   toast: ToastService,
   error: HttpErrorResponse,
 ): Observable<never> {
+  const apiError = parseApiError(error);
   const message =
-    error.error?.error ?? 'Has excedido el límite de solicitudes. Intenta de nuevo más tarde.';
+    apiError?.message ?? 'Has excedido el límite de solicitudes. Intenta de nuevo más tarde.';
   toast.warn('Demasiadas solicitudes', message);
   return throwError(() => error);
 }
@@ -84,6 +93,8 @@ export function handleServerError(
   toast: ToastService,
   error: HttpErrorResponse,
 ): Observable<never> {
-  toast.error('Error del servidor', 'Ocurrió un error inesperado. Intenta de nuevo.');
+  const apiError = parseApiError(error);
+  const message = apiError?.message ?? 'Ocurrió un error inesperado. Intenta de nuevo.';
+  toast.error('Error del servidor', message);
   return throwError(() => error);
 }
