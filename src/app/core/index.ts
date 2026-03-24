@@ -9,5 +9,6 @@ export { BaseHttpService } from './services/base-http.service';
 export type { PaginatedResponse, BaseQueryParams } from './models/pagination.model';
 export { API_ENDPOINTS } from './constants/api-endpoints.constants';
 export { ROUTE_PATHS } from './constants/route-paths.constants';
-export { extractErrorMessage } from './utils/error.utils';
+export { extractErrorMessage, parseApiError } from './utils/error.utils';
+export type { ApiError, ApiErrorResponse } from './utils/error.utils';
 export { buildHttpParams } from './utils/http-params.utils';
