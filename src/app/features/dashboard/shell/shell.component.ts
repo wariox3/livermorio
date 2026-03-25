@@ -6,6 +6,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { AccordionModule } from 'primeng/accordion';
 import { AuthService } from '../../auth/services/auth.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { extractErrorMessage } from '../../../core/utils/error.utils';
@@ -16,6 +17,12 @@ interface NavItem {
   icon: string;
   route: string;
   requiresTenant?: boolean;
+}
+
+interface NavGroup {
+  label: string;
+  icon: string;
+  children: NavItem[];
 }
 
 @Component({
@@ -31,6 +38,7 @@ interface NavItem {
     ButtonModule,
     InputTextModule,
     MessageModule,
+    AccordionModule,
   ],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
@@ -51,43 +59,72 @@ export class ShellComponent {
     tenantId: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
   });
 
-  readonly navItems: NavItem[] = [
-    { label: 'Inicio', icon: 'pi pi-home', route: ROUTE_PATHS.dashboard.inicio },
+  readonly inicioItem: NavItem = {
+    label: 'Inicio',
+    icon: 'pi pi-home',
+    route: ROUTE_PATHS.dashboard.inicio,
+  };
+
+  readonly navGroups: NavGroup[] = [
     {
-      label: 'Pagos',
-      icon: 'pi pi-credit-card',
-      route: ROUTE_PATHS.dashboard.pagos,
-      requiresTenant: true,
+      label: 'Consultas',
+      icon: 'pi pi-search',
+      children: [
+        {
+          label: 'Pagos',
+          icon: 'pi pi-credit-card',
+          route: ROUTE_PATHS.dashboard.pagos,
+          requiresTenant: true,
+        },
+        {
+          label: 'Turnos',
+          icon: 'pi pi-calendar',
+          route: ROUTE_PATHS.dashboard.turnos,
+          requiresTenant: true,
+        },
+        {
+          label: 'Reclamos',
+          icon: 'pi pi-exclamation-triangle',
+          route: ROUTE_PATHS.dashboard.reclamos,
+          requiresTenant: true,
+        },
+        {
+          label: 'Solicitudes',
+          icon: 'pi pi-file',
+          route: ROUTE_PATHS.dashboard.solicitudes,
+          requiresTenant: true,
+        },
+        {
+          label: 'Capacitaciones',
+          icon: 'pi pi-book',
+          route: ROUTE_PATHS.dashboard.capacitaciones,
+          requiresTenant: true,
+        },
+        {
+          label: 'Certificado laboral',
+          icon: 'pi pi-id-card',
+          route: ROUTE_PATHS.dashboard.certificadoLaboral,
+          requiresTenant: true,
+        },
+      ],
     },
     {
-      label: 'Turnos',
-      icon: 'pi pi-calendar',
-      route: ROUTE_PATHS.dashboard.turnos,
-      requiresTenant: true,
-    },
-    {
-      label: 'Reclamos',
-      icon: 'pi pi-exclamation-triangle',
-      route: ROUTE_PATHS.dashboard.reclamos,
-      requiresTenant: true,
-    },
-    {
-      label: 'Solicitudes',
-      icon: 'pi pi-file',
-      route: ROUTE_PATHS.dashboard.solicitudes,
-      requiresTenant: true,
-    },
-    {
-      label: 'Capacitaciones',
-      icon: 'pi pi-book',
-      route: ROUTE_PATHS.dashboard.capacitaciones,
-      requiresTenant: true,
-    },
-    {
-      label: 'Certificado laboral',
-      icon: 'pi pi-id-card',
-      route: ROUTE_PATHS.dashboard.certificadoLaboral,
-      requiresTenant: true,
+      label: 'Finanzas',
+      icon: 'pi pi-wallet',
+      children: [
+        {
+          label: 'Microcréditos',
+          icon: 'pi pi-money-bill',
+          route: ROUTE_PATHS.dashboard.microcreditos,
+          requiresTenant: true,
+        },
+        {
+          label: 'Adelanto de nómina',
+          icon: 'pi pi-dollar',
+          route: ROUTE_PATHS.dashboard.adelantoNomina,
+          requiresTenant: true,
+        },
+      ],
     },
   ];
 

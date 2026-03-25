@@ -37,19 +37,35 @@
     <!-- Sidebar desktop -->
     <aside class="shell-sidebar">
       <nav class="sidebar-nav">
-        @for (item of navItems; track item.route) {
-          @if (item.requiresTenant && !hasTenant()) {
-            <span class="nav-item nav-item--disabled">
-              <i [class]="item.icon"></i>
-              <span>{{ item.label }}</span>
-            </span>
-          } @else {
-            <a class="nav-item" [routerLink]="item.route" routerLinkActive="active">
-              <i [class]="item.icon"></i>
-              <span>{{ item.label }}</span>
-            </a>
+        <a class="nav-item" [routerLink]="inicioItem.route" routerLinkActive="active">
+          <i [class]="inicioItem.icon"></i>
+          <span>{{ inicioItem.label }}</span>
+        </a>
+
+        <p-accordion [multiple]="true" class="sidebar-accordion">
+          @for (group of navGroups; track group.label) {
+            <p-accordion-panel [value]="group.label">
+              <p-accordion-header>
+                <span>{{ group.label }}</span>
+              </p-accordion-header>
+              <p-accordion-content>
+                @for (item of group.children; track item.route) {
+                  @if (item.requiresTenant && !hasTenant()) {
+                    <span class="nav-item nav-item--disabled">
+                      <i [class]="item.icon"></i>
+                      <span>{{ item.label }}</span>
+                    </span>
+                  } @else {
+                    <a class="nav-item" [routerLink]="item.route" routerLinkActive="active">
+                      <i [class]="item.icon"></i>
+                      <span>{{ item.label }}</span>
+                    </a>
+                  }
+                }
+              </p-accordion-content>
+            </p-accordion-panel>
           }
-        }
+        </p-accordion>
       </nav>
     </aside>
 
@@ -68,24 +84,46 @@
   header="Menú"
 >
   <nav class="sidebar-nav">
-    @for (item of navItems; track item.route) {
-      @if (item.requiresTenant && !hasTenant()) {
-        <span class="nav-item nav-item--disabled">
-          <i [class]="item.icon"></i>
-          <span>{{ item.label }}</span>
-        </span>
-      } @else {
-        <a
-          class="nav-item"
-          [routerLink]="item.route"
-          routerLinkActive="active"
-          (click)="drawerVisible.set(false)"
-        >
-          <i [class]="item.icon"></i>
-          <span>{{ item.label }}</span>
-        </a>
+    <a
+      class="nav-item"
+      [routerLink]="inicioItem.route"
+      routerLinkActive="active"
+      (click)="drawerVisible.set(false)"
+    >
+      <i [class]="inicioItem.icon"></i>
+      <span>{{ inicioItem.label }}</span>
+    </a>
+
+    <p-accordion [multiple]="true" class="sidebar-accordion">
+      @for (group of navGroups; track group.label) {
+        <p-accordion-panel [value]="group.label">
+          <p-accordion-header>
+            <i [class]="group.icon"></i>
+            <span>{{ group.label }}</span>
+          </p-accordion-header>
+          <p-accordion-content>
+            @for (item of group.children; track item.route) {
+              @if (item.requiresTenant && !hasTenant()) {
+                <span class="nav-item nav-item--disabled">
+                  <i [class]="item.icon"></i>
+                  <span>{{ item.label }}</span>
+                </span>
+              } @else {
+                <a
+                  class="nav-item"
+                  [routerLink]="item.route"
+                  routerLinkActive="active"
+                  (click)="drawerVisible.set(false)"
+                >
+                  <i [class]="item.icon"></i>
+                  <span>{{ item.label }}</span>
+                </a>
+              }
+            }
+          </p-accordion-content>
+        </p-accordion-panel>
       }
-    }
+    </p-accordion>
   </nav>
 </p-drawer>
 

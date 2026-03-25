@@ -70,6 +70,18 @@ export const DASHBOARD_ROUTES: Routes = [
         canActivate: [tenantGuard],
         loadChildren: () => import('../turnos/turnos.routes').then((m) => m.TURNOS_ROUTES),
       },
+      {
+        path: 'microcreditos',
+        canActivate: [tenantGuard],
+        loadChildren: () =>
+          import('../microcreditos/microcreditos.routes').then((m) => m.MICROCREDITOS_ROUTES),
+      },
+      {
+        path: 'adelanto-nomina',
+        canActivate: [tenantGuard],
+        loadChildren: () =>
+          import('../adelanto-nomina/adelanto-nomina.routes').then((m) => m.ADELANTO_NOMINA_ROUTES),
+      },
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
     ],
   },
