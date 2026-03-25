@@ -7,6 +7,7 @@ import {
   ProgramacionReporte,
   ProgramacionReporteRespuesta,
   ProgramacionReporteTipo,
+  Turno,
 } from '../models/turno.model';
 
 @Injectable({ providedIn: 'root' })
@@ -16,6 +17,7 @@ export class TurnosService extends BaseHttpService {
   private readonly REPORTE_CREATE_URL = '/tur/programacion_reporte/nuevo';
   private readonly REPORTE_RESPUESTAS_URL = '/tur/programacion_reporte_respuesta/lista';
   private readonly REPORTE_LISTA_URL = '/tur/programacion_reporte/lista';
+  private readonly TURNO_PROGRAMACION_URL = '/tur/turno/programacion';
 
   /** Consulta la programación mensual de turnos para un empleado en un año y mes específicos. */
   getProgramacionEmpleado(
@@ -53,6 +55,11 @@ export class TurnosService extends BaseHttpService {
       page,
       size,
     });
+  }
+
+  /** Obtiene el detalle de los turnos a partir de sus códigos. */
+  getTurnosProgramacion(turnos: string[]): Observable<PaginatedResponse<Turno>> {
+    return this.post<PaginatedResponse<Turno>>(this.TURNO_PROGRAMACION_URL, { turnos });
   }
 
   /** Obtiene las respuestas de un reporte de programación. */

@@ -2,6 +2,7 @@ export interface ProgramacionEmpleado {
   codigo_programacion_pk: number;
   puesto_nombre: string;
   puesto_direccion: string;
+  codigo_puesto_fk: string;
   coordinador_nombre: string;
   programador_nombre: string;
   codigo_modalidad_fk: string;
@@ -54,11 +55,47 @@ export interface TurnoCalendario {
 export interface TurnoDelDia {
   puesto_nombre: string;
   puesto_direccion: string;
+  codigo_puesto_fk: string;
   coordinador_nombre: string;
   programador_nombre: string;
   codigo_modalidad_fk: string;
   tercero_nombre_corto: string;
   turno: string;
+  nombre_turno?: string;
+}
+
+export interface Turno {
+  codigo_turno_pk: string;
+  nombre: string;
+  hora_desde: string;
+  hora_hasta: string;
+  horas: number;
+  horas_diurnas: number;
+  horas_nocturnas: number;
+  horas_recargo_nocturno: number;
+  novedad: boolean;
+  descanso: boolean;
+  descanso_ordinario: boolean;
+  incapacidad: boolean;
+  incapacidad_no_legalizada: boolean;
+  licencia: boolean;
+  licencia_no_remunerada: boolean;
+  vacacion: boolean;
+  ingreso: boolean;
+  retiro: boolean;
+  induccion: boolean;
+  ausentismo: boolean;
+  dia: boolean;
+  noche: boolean;
+  complementario: boolean;
+  adicional: boolean;
+  completo: boolean;
+  disponible: boolean;
+  vr_adicional: number;
+  adicional_dia: boolean;
+  adicional_noche: boolean;
+  codigo_empresa_fk: number;
+  estado_inactivo: boolean;
 }
 
 export interface ProgramacionReporteTipo {
