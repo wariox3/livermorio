@@ -52,7 +52,7 @@ Prettier is configured in `.prettierrc.json` (printWidth 100, singleQuote, angul
 - `guards/auth.guard.ts` — redirects to `/auth/login?returnUrl=...` if not authenticated
 - `guards/public.guard.ts` — redirects to `/dashboard` if already authenticated
 - `interceptors/auth.interceptor.ts` — functional interceptor, adds `withCredentials: true` for HTTP-only cookies
-- `interceptors/error.interceptor.ts` — manejo global de errores HTTP con toasts automáticos para: status 0 (conexión), 403 (acceso denegado), 500+ (error del servidor); ante 401 intenta refresh automático del token antes de cerrar sesión (patrón refresh + retry con cola de concurrencia). **No cubre 400/422** (errores de validación)
+- `interceptors/error.interceptor.ts` — manejo global de errores HTTP con toasts automáticos para: status 0 (conexión), 403 (acceso denegado), 429 (rate limit, toast warning), 500+ (error del servidor); ante 401 intenta refresh automático del token antes de cerrar sesión (patrón refresh + retry con cola de concurrencia). **No cubre 400/422** (errores de validación)
 - `models/auth.model.ts` — re-exports de `features/auth/models`
 - `services/base-http.service.ts` — servicio base genérico para operaciones CRUD estandarizadas
 - `services/toast.service.ts` — servicio wrapper para notificaciones PrimeNG Toast
@@ -81,7 +81,7 @@ Prettier is configured in `.prettierrc.json` (printWidth 100, singleQuote, angul
 - Use `inject()` inside the class body instead of constructor injection
 - New feature routes go in a `<feature>.routes.ts` file and are lazy-loaded via `loadChildren` or `loadComponent` from `app.routes.ts`
 - SCSS uses PrimeNG design tokens (`var(--p-surface-0)`, `var(--p-primary-color)`, etc.) for theming — avoid hardcoded colours
-- **No duplicar toasts de error en componentes** — el `errorInterceptor` ya muestra toasts para errores de conexión (status 0), 403 y 500+. En los callbacks `error` de los subscribe, solo manejar estado local (loading flags, etc.). Solo agregar `toastService.error()` manual para errores 400/422 si se necesita mostrar mensajes de validación específicos del backend
+- **No duplicar toasts de error en componentes** — el `errorInterceptor` ya muestra toasts para errores de conexión (status 0), 403, 429 y 500+. En los callbacks `error` de los subscribe, solo manejar estado local (loading flags, etc.). Solo agregar `toastService.error()` manual para errores 400/422 si se necesita mostrar mensajes de validación específicos del backend
 - Los toasts de éxito (`toastService.success()`) sí deben ir en los componentes ya que el interceptor no los maneja
 
 ## Next Steps
@@ -92,3 +92,4 @@ Prettier is configured in `.prettierrc.json` (printWidth 100, singleQuote, angul
 - Documenta el código de forma clara y concisa
 - Sigue las convenciones del proyecto para la arquitectura y estructura de archivos
 - Usa el mcp de context7 en caso de necesitar información adicional tanto para la version de angular como primeng
+- Siempre piensa en el responsive design ya que es de suma importancia

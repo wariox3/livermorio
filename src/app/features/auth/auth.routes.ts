@@ -35,5 +35,13 @@ export const AUTH_ROUTES: Routes = [
     loadComponent: () =>
       import('./pages/verify-email/verify-email.component').then((m) => m.VerifyEmailComponent),
   },
+  {
+    path: 'resend-verification',
+    canActivate: [publicGuard],
+    loadComponent: () =>
+      import('./pages/resend-verification/resend-verification.component').then(
+        (m) => m.ResendVerificationComponent,
+      ),
+  },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

@@ -47,3 +47,8 @@ export interface RegisterResponse {
   user: RegisteredUser;
   verification_link: string;
 }
+
+export interface ResendVerificationRequest {
+  email: string;
+  turnstile_token: string;
+}

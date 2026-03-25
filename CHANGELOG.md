@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.6](https://github.com/tamerlantian/livermorio/compare/v0.0.5...v0.0.6) (2026-03-25)
+
+### Features
+
+- agregar handler para respuestas con rate limit ([05e5a98](https://github.com/tamerlantian/livermorio/commit/05e5a988e3b2a754e4f25586d512290c9a548387))
+- **auth:** agregar vista de reenvío de verificación de cuenta ([9845903](https://github.com/tamerlantian/livermorio/commit/98459030084381f9e0c179e0db23870cde2598e1))
+
+### Bug Fixes
+
+- cambio de ubicacion de fecha ([42d66b2](https://github.com/tamerlantian/livermorio/commit/42d66b21af783d86d03739f8f117ed330cfbbbef))
+
+### Refactoring
+
+- extraer interfaces y parseApiError en error.utils ([69540e3](https://github.com/tamerlantian/livermorio/commit/69540e3df72e9a5b47f67abf77e7acd3bec2cdf5))
+
 ## [0.0.5](https://github.com/tamerlantian/livermorio/compare/v0.0.4...v0.0.5) (2026-03-20)
 
 ### Features
