@@ -119,9 +119,9 @@ export class ShellComponent {
           requiresTenant: true,
         },
         {
-          label: 'Adelanto de nómina',
+          label: 'Anticipo de nómina',
           icon: 'pi pi-dollar',
-          route: ROUTE_PATHS.dashboard.adelantoNomina,
+          route: ROUTE_PATHS.dashboard.anticipoNomina,
           requiresTenant: true,
         },
       ],

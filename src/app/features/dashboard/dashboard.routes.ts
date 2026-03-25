@@ -77,10 +77,10 @@ export const DASHBOARD_ROUTES: Routes = [
           import('../microcreditos/microcreditos.routes').then((m) => m.MICROCREDITOS_ROUTES),
       },
       {
-        path: 'adelanto-nomina',
+        path: 'anticipo-nomina',
         canActivate: [tenantGuard],
         loadChildren: () =>
-          import('../adelanto-nomina/adelanto-nomina.routes').then((m) => m.ADELANTO_NOMINA_ROUTES),
+          import('../anticipo-nomina/anticipo-nomina.routes').then((m) => m.ANTICIPO_NOMINA_ROUTES),
       },
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
     ],
