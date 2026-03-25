@@ -42,7 +42,7 @@
           <span>{{ inicioItem.label }}</span>
         </a>
 
-        <p-accordion [multiple]="true" class="sidebar-accordion">
+        <p-accordion [multiple]="true" [value]="activeGroups" class="sidebar-accordion">
           @for (group of navGroups; track group.label) {
             <p-accordion-panel [value]="group.label">
               <p-accordion-header>
@@ -94,7 +94,7 @@
       <span>{{ inicioItem.label }}</span>
     </a>
 
-    <p-accordion [multiple]="true" class="sidebar-accordion">
+    <p-accordion [multiple]="true" [value]="activeGroups" class="sidebar-accordion">
       @for (group of navGroups; track group.label) {
         <p-accordion-panel [value]="group.label">
           <p-accordion-header>

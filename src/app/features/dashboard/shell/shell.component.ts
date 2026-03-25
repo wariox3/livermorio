@@ -65,6 +65,8 @@ export class ShellComponent {
     route: ROUTE_PATHS.dashboard.inicio,
   };
 
+  readonly activeGroups: string[] = ['Consultas', 'Finanzas'];
+
   readonly navGroups: NavGroup[] = [
     {
       label: 'Consultas',
@@ -113,9 +115,9 @@ export class ShellComponent {
       icon: 'pi pi-wallet',
       children: [
         {
-          label: 'Microcréditos',
+          label: 'Créditos',
           icon: 'pi pi-money-bill',
-          route: ROUTE_PATHS.dashboard.microcreditos,
+          route: ROUTE_PATHS.dashboard.creditos,
           requiresTenant: true,
         },
         {

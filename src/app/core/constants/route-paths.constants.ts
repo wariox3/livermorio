@@ -19,7 +19,7 @@ export const ROUTE_PATHS = {
     autorizacionArma: '/dashboard/autorizacion-arma',
     seguridadSocial: '/dashboard/seguridad-social',
     turnos: '/dashboard/turnos',
-    microcreditos: '/dashboard/microcreditos',
+    creditos: '/dashboard/creditos',
     anticipoNomina: '/dashboard/anticipo-nomina',
   },
   legal: {

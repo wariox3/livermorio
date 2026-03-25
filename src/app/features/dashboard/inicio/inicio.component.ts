@@ -85,10 +85,10 @@ export class InicioComponent {
       icon: 'pi pi-wallet',
       items: [
         {
-          label: 'Microcréditos',
-          description: 'Solicita y consulta tus microcréditos disponibles.',
+          label: 'Créditos',
+          description: 'Solicita y consulta tus créditos disponibles.',
           icon: 'pi pi-money-bill',
-          route: ROUTE_PATHS.dashboard.microcreditos,
+          route: ROUTE_PATHS.dashboard.creditos,
           requiresTenant: true,
         },
         {

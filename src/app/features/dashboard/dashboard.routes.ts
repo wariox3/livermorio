@@ -71,10 +71,9 @@ export const DASHBOARD_ROUTES: Routes = [
         loadChildren: () => import('../turnos/turnos.routes').then((m) => m.TURNOS_ROUTES),
       },
       {
-        path: 'microcreditos',
+        path: 'creditos',
         canActivate: [tenantGuard],
-        loadChildren: () =>
-          import('../microcreditos/microcreditos.routes').then((m) => m.MICROCREDITOS_ROUTES),
+        loadChildren: () => import('../creditos/creditos.routes').then((m) => m.CREDITOS_ROUTES),
       },
       {
         path: 'anticipo-nomina',

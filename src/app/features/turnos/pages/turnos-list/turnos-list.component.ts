@@ -9,6 +9,7 @@ import { TurnoCardComponent } from '../../components/turno-card/turno-card.compo
 import { ProgramacionTableComponent } from '../../components/programacion-table/programacion-table.component';
 import { ProgramacionCalendarComponent } from '../../components/programacion-calendar/programacion-calendar.component';
 import { ReportesTableComponent } from '../../components/reportes-table/reportes-table.component';
+import { TurnosLegendComponent } from '../../components/turnos-legend/turnos-legend.component';
 
 @Component({
   selector: 'app-turnos-list',
@@ -20,6 +21,7 @@ import { ReportesTableComponent } from '../../components/reportes-table/reportes
     ProgramacionTableComponent,
     ProgramacionCalendarComponent,
     ReportesTableComponent,
+    TurnosLegendComponent,
   ],
   templateUrl: './turnos-list.component.html',
   styleUrl: './turnos-list.component.scss',
