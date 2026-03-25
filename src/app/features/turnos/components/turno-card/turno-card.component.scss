@@ -52,7 +52,7 @@
       color: var(--brand-navy);
     }
 
-    .turno-card__tag {
+    .turno-card__tag:not(.turno-card__tag--modalidad) {
       background: color-mix(in srgb, var(--brand-blue) 12%, transparent);
       color: var(--brand-navy);
     }
@@ -102,7 +102,7 @@
       color: var(--brand-blue);
     }
 
-    .turno-card__tag {
+    .turno-card__tag:not(.turno-card__tag--modalidad) {
       background: color-mix(in srgb, var(--brand-blue) 15%, transparent);
       color: var(--brand-blue);
     }
@@ -150,6 +150,21 @@
     color: var(--p-text-color);
     letter-spacing: -0.02em;
     line-height: 1;
+  }
+
+  &__shift-hours {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-left: auto;
+    font-size: 0.775rem;
+    font-weight: 500;
+    color: var(--p-text-muted-color);
+    white-space: nowrap;
+
+    i {
+      font-size: 0.7rem;
+    }
   }
 
   &__header-text {
@@ -213,6 +228,16 @@
     letter-spacing: 0.01em;
   }
 
+  &__tag--modalidad {
+    background: color-mix(in srgb, #7c3aed 10%, transparent);
+    color: #5b21b6;
+
+    :host-context(.dark-mode) & {
+      background: color-mix(in srgb, #7c3aed 20%, transparent);
+      color: #a78bfa;
+    }
+  }
+
   // --- Details zone ---
   &__details {
     display: flex;
@@ -267,6 +292,24 @@
     flex-direction: column;
     gap: 0.0625rem;
     min-width: 0;
+  }
+
+  &__detail-value-row {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+  }
+
+  &__detail-code {
+    font-size: 0.675rem;
+    font-weight: 600;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    background: var(--p-surface-200);
+    color: var(--p-text-muted-color);
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
   }
 
   &__detail-label {

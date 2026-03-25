@@ -70,6 +70,17 @@ export const DASHBOARD_ROUTES: Routes = [
         canActivate: [tenantGuard],
         loadChildren: () => import('../turnos/turnos.routes').then((m) => m.TURNOS_ROUTES),
       },
+      {
+        path: 'creditos',
+        canActivate: [tenantGuard],
+        loadChildren: () => import('../creditos/creditos.routes').then((m) => m.CREDITOS_ROUTES),
+      },
+      {
+        path: 'anticipo-nomina',
+        canActivate: [tenantGuard],
+        loadChildren: () =>
+          import('../anticipo-nomina/anticipo-nomina.routes').then((m) => m.ANTICIPO_NOMINA_ROUTES),
+      },
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
     ],
   },

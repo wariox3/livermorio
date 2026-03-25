@@ -1,5 +1,11 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { TurnoDelDia } from '../../models/turno.model';
+
+const MODALIDAD_LABELS: Record<string, string> = {
+  ANL: 'Arma no letal',
+  CAR: 'Con arma',
+  SAR: 'Sin arma',
+};
 
 @Component({
   selector: 'app-turno-card',
@@ -16,4 +22,9 @@ export class TurnoCardComponent {
   readonly emptyIcon = input.required<string>();
   readonly emptyTitle = input.required<string>();
   readonly emptyMessage = input.required<string>();
+
+  readonly modalidadLabel = computed(() => {
+    const codigo = this.turno()?.codigo_modalidad_fk;
+    return codigo ? (MODALIDAD_LABELS[codigo] ?? codigo) : null;
+  });
 }

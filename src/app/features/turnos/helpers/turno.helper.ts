@@ -77,6 +77,7 @@ export function findTurnoForDay(
       return {
         puesto_nombre: prog.puesto_nombre,
         puesto_direccion: prog.puesto_direccion,
+        codigo_puesto_fk: prog.codigo_puesto_fk,
         coordinador_nombre: prog.coordinador_nombre,
         programador_nombre: prog.programador_nombre,
         codigo_modalidad_fk: prog.codigo_modalidad_fk,
@@ -87,6 +88,22 @@ export function findTurnoForDay(
   }
 
   return null;
+}
+
+/** Extrae los códigos de turno únicos de todas las programaciones (campos dia_1..dia_31). */
+export function extraerTurnosUnicos(programaciones: ProgramacionEmpleado[]): string[] {
+  const turnosSet = new Set<string>();
+
+  for (const prog of programaciones) {
+    for (let d = 1; d <= 31; d++) {
+      const valor = prog[`dia_${d}` as keyof ProgramacionEmpleado] as string | null;
+      if (valor) {
+        turnosSet.add(valor);
+      }
+    }
+  }
+
+  return [...turnosSet];
 }
 
 /** Construye una estructura de semanas con días para renderizar un calendario mensual. */

@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.7](https://github.com/tamerlantian/livermorio/compare/v0.0.6...v0.0.7) (2026-03-25)
+
+### Features
+
+- **dashboard:** agrupar nav en acordeones consultas y finanzas ([f871a75](https://github.com/tamerlantian/livermorio/commit/f871a75ee3881c41bcadd7832a6e2946814c6492))
+- **turnos:** agregar leyenda de turnos y reorganizar layout de página ([8072481](https://github.com/tamerlantian/livermorio/commit/807248181b8258b9bd82801c3711f36b0fc4d48b))
+- **turnos:** enriquecer cards con detalle de turno desde programación ([89eee4b](https://github.com/tamerlantian/livermorio/commit/89eee4b31b0211858e7a7bc6e30831d317b43830))
+
+### Bug Fixes
+
+- **turnos:** eliminar doble petición de getReportes al cargar reportes ([100f5c7](https://github.com/tamerlantian/livermorio/commit/100f5c70e7216d2cd0d7bfe577eb8c05969a8c74))
+
+### Refactoring
+
+- **finanzas:** renombrar adelanto de nómina a anticipo de nómina ([0b27846](https://github.com/tamerlantian/livermorio/commit/0b2784654a7b29189c1e16b8a695f25ecdce6d25))
+
 ## [0.0.6](https://github.com/tamerlantian/livermorio/compare/v0.0.5...v0.0.6) (2026-03-25)
 
 ### Features
