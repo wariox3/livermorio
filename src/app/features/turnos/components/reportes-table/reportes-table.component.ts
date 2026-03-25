@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TableModule, TableLazyLoadEvent, TableRowExpandEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -14,7 +14,7 @@ import { extractErrorMessage } from '../../../../core/utils/error.utils';
   templateUrl: './reportes-table.component.html',
   styleUrl: './reportes-table.component.scss',
 })
-export class ReportesTableComponent implements OnInit {
+export class ReportesTableComponent {
   private readonly turnosService = inject(TurnosService);
 
   readonly empleadoId = input.required<number>();
@@ -30,10 +30,6 @@ export class ReportesTableComponent implements OnInit {
   readonly respuestasCache = signal<Map<number, ProgramacionReporteRespuesta[]>>(new Map());
   readonly respuestasLoading = signal<Set<number>>(new Set());
   readonly respuestasError = signal<Map<number, string>>(new Map());
-
-  ngOnInit(): void {
-    this.loadReportes(1);
-  }
 
   loadReportes(page: number): void {
     this.loading.set(true);
